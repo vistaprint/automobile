@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automobile.Mobile.iOS", "Automobile.Mobile.iOS.csproj", "{9899DEDE-FE73-46AE-B132-E788BDF63654}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automobile.Mobile.Framework", "..\Framework\Automobile.Mobile.Framework.csproj", "{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automobile.Communication", "..\..\Communication\Automobile.Communication.csproj", "{24FE1492-BC4D-4572-9480-A7A7F78D196A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Release|iPhone.Build.0 = Release|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Release|iPhone.Build.0 = Release|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Debug|iPhone.Build.0 = Debug|iPhone
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Release|iPhone.ActiveCfg = Release|iPhone
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Release|iPhone.Build.0 = Release|iPhone
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{9899DEDE-FE73-46AE-B132-E788BDF63654}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Automobile.Mobile.iOS.csproj
+	EndGlobalSection
+EndGlobal

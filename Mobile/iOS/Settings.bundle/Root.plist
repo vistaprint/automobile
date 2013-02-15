@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Connection Info</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>connString</string>
+			<key>Title</key>
+			<string>Connection String</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>dbregistration</string>
+			<key>Key</key>
+			<string>connType</string>
+			<key>Title</key>
+			<string>Connection Type</string>
+			<key>Titles</key>
+			<array>
+				<string>Direct Connection</string>
+				<string>DB Registration</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>direct</string>
+				<string>dbregistration</string>
+			</array>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>Title</key>
+	<string>AppSettings</string>
+</dict>
+</plist>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/MainView">
+    <RadioGroup
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ConnectionGroup">
+        <TextView
+            android:text="Connection Type"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Direct Connection"
+            android:id="@+id/directButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB Registration"
+            android:id="@+id/dbButton" />
+    </RadioGroup>
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ServerLayout"
+        android:visibility="gone">
+        <AutoCompleteTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ConnectionStringTextView"
+            android:hint="Connection String" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/StartAutomation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Automation" />
+</LinearLayout>

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automobile.Mobile.Framework.UnitTests", "Automobile.Mobile.Framework.UnitTests.csproj", "{C3EFF85D-BAFE-42C0-98E2-E0A701C68163}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automobile.Mobile.Framework", "..\Automobile.Mobile.Framework.csproj", "{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automobile.Communication", "..\..\..\Communication\Automobile.Communication.csproj", "{24FE1492-BC4D-4572-9480-A7A7F78D196A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3EFF85D-BAFE-42C0-98E2-E0A701C68163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3EFF85D-BAFE-42C0-98E2-E0A701C68163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3EFF85D-BAFE-42C0-98E2-E0A701C68163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3EFF85D-BAFE-42C0-98E2-E0A701C68163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FE1492-BC4D-4572-9480-A7A7F78D196A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

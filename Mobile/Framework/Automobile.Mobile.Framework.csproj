@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{46DB9F60-EFE8-4575-B9C3-1BED6E3F0EA2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Automobile.Mobile.Framework</RootNamespace>
+    <AssemblyName>Automobile.Mobile.Framework</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\Libs\SQLite\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Browser\Element.cs" />
+    <Compile Include="Browser\MobileBrowser.cs" />
+    <Compile Include="Commands\CommandException.cs" />
+    <Compile Include="Commands\CommandMode.cs" />
+    <Compile Include="Commands\CommandResponse.cs" />
+    <Compile Include="Commands\CommandType.cs" />
+    <Compile Include="Commands\DisconnectCommand.cs" />
+    <Compile Include="Commands\ExecJavascriptCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\OrientationCommand.cs" />
+    <Compile Include="Commands\RefreshCommand.cs" />
+    <Compile Include="Commands\ScreenshotCommand.cs" />
+    <Compile Include="Commands\UrlCommand.cs" />
+    <Compile Include="Commands\WaitForReadyCommand.cs" />
+    <Compile Include="ConnectionType.cs" />
+    <Compile Include="Device\DeviceInfo.cs" />
+    <Compile Include="Device\IDevice.cs" />
+    <Compile Include="Device\IMobileDevice.cs" />
+    <Compile Include="Browser\IMobileBrowser.cs" />
+    <Compile Include="Device\IProxyDevice.cs" />
+    <Compile Include="Device\MobileDevice.cs" />
+    <Compile Include="Device\ProxyDevice.cs" />
+    <Compile Include="JQuery.cs" />
+    <Compile Include="MobileOs.cs" />
+    <Compile Include="Orientation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Browser\ProxyBrowser.cs" />
+    <Compile Include="Registrar\MobileDb.cs" />
+    <Compile Include="Registrar\Registrar.cs" />
+    <Compile Include="Browser\IWebClient.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="BeforeBuild" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Communication\Automobile.Communication.csproj">
+      <Project>{24FE1492-BC4D-4572-9480-A7A7F78D196A}</Project>
+      <Name>Automobile.Communication</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Framework.licenseheader" />
+  </ItemGroup>
+</Project>
