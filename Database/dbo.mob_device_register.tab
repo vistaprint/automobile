@@ -1,0 +1,37 @@
+/*
+Copyright 2013 Vistaprint
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+dbo.mob_device_register.tab
+*/
+
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+CREATE TABLE [dbo].[mob_device_register](
+	[device_register_id] [int] IDENTITY(1,1) NOT NULL,
+	[device_id] [varchar](32) NOT NULL,
+	[mobile_os] [varchar](64) NOT NULL,
+	[os_version] [varchar](32) NOT NULL,
+	[ip] [varchar](16) NOT NULL,
+	[availible] [bit] NOT NULL,
+ CONSTRAINT [PK_mob_device_register] PRIMARY KEY CLUSTERED 
+(
+	[device_register_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [DBDATA],
+ CONSTRAINT [UQ_mob_device_id] UNIQUE NONCLUSTERED 
+(
+	[device_id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [DBDATA]
+) ON [DBDATA]
+
