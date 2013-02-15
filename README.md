@@ -4,7 +4,7 @@ Automobile is a cross platform browser automation framework for mobile devices. 
 
 ## Usage
 
-### Anroid
+### Android
 
 #### Build
 To build the mobile app for android, Mono For Android (4.4.54) is required.
