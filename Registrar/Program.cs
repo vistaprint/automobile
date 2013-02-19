@@ -1,6 +1,4 @@
-﻿using VP.Capabilities.Quality.Platform.Mobile.Framework.Registrar;
-
-namespace Registrar
+﻿namespace Automobile.Registrar
 {
     class Program
     {

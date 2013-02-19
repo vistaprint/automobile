@@ -48,7 +48,6 @@
     <Compile Include="DeviceCommTests.cs" />
     <Compile Include="Helpers\LocalDeviceDummy.cs" />
     <Compile Include="Helpers\MobileBrowserDummy.cs" />
-    <Compile Include="MobileDbTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

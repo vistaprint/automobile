@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Automobile.Mobile.Framework;
 using Automobile.Mobile.Framework.Device;
-using Automobile.Mobile.Framework.Registrar;
+using NUnit.Framework;
 
-namespace Automobile.Mobile.Framework.UnitTests
+namespace Automobile.Registrar.UnitTests
 {
     [TestFixture]
     public class MobileDbTests

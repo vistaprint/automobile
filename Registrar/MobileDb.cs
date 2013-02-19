@@ -20,7 +20,7 @@ using System.Data.SQLite;
 using System.Net;
 using Automobile.Mobile.Framework.Device;
 
-namespace Automobile.Mobile.Framework.Registrar
+namespace Automobile.Registrar
 {        
     public static class MobileDb
     {
