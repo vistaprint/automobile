@@ -13,16 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-MobileDb.cs 
+SQLiteClient.cs 
 */
 
+using System;
 using System.Data.SQLite;
-using System.Net;
+using Automobile.Mobile.Framework;
+using Automobile.Mobile.Framework.Data;
 using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Registrar
-{        
-    public static class MobileDb
+{
+
+    public class SQLiteClient : IMobileDb
     {
         private static string _dbName;
         private static SQLiteConnection _sharedDb;
@@ -31,17 +34,14 @@ namespace Automobile.Registrar
         /// Creates tables, if needed.
         /// </summary>
         /// <param name="dbName">Name of the file to use</param>
-        public static void Initialize(string dbName)
-        {
-            Initialize(dbName, false);
-        }
+        public SQLiteClient(string dbName) : this(dbName, false) {}
 
         /// <summary>
         /// Creates tables, if needed. Optionally creates a shared connection (for in-memory or temporary file db).
         /// </summary>
         /// <param name="dbName">Name of the file to use, or :memory: for in memory db</param>
         /// <param name="shared">To share a connection object between all calls to this class</param>
-        public static void Initialize(string dbName, bool shared)
+        public SQLiteClient(string dbName, bool shared)
         {
             _dbName = "Data Source=" + dbName;
             var db = new SQLiteConnection(_dbName);
@@ -63,7 +63,7 @@ namespace Automobile.Registrar
         /// <summary>
         /// Closes the shared connection if one exists
         /// </summary>
-        public static void Close()
+        public void Dispose()
         {
             if(_sharedDb != null)
             {
@@ -71,7 +71,7 @@ namespace Automobile.Registrar
             }
         }
 
-        public static void Submit(DeviceInfo info)
+        public void Submit(DeviceInfo info)
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 
@@ -88,41 +88,55 @@ namespace Automobile.Registrar
             }
         }
 
+        public void SetAvailibility(DeviceInfo device, bool availible)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Returns the IP of the first registered device which matches all the info.
         /// Null values are ignored in the match
         /// </summary>
         /// <param name="info">Info to match</param>
         /// <returns>IP of the first match</returns>
-        public static IPAddress GetFirstMatch(DeviceInfo info)
+        public DeviceInfo GetFirstMatch(DeviceInfo device)
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 
             SQLiteCommand deviceInfo = new SQLiteCommand(db);
-            deviceInfo.CommandText = string.Format("SELECT IP FROM DeviceInfo WHERE MobileOs = '{0}'", info.MobileOs);
+            deviceInfo.CommandText = string.Format("SELECT MobileOs, DeviceModel, OsVersion, UniqueId, IP FROM DeviceInfo WHERE MobileOs = '{0}'", device.MobileOs);
 
-            if(info.DeviceModel != null)
+            if(device.DeviceModel != null)
             {
-                deviceInfo.CommandText += string.Format(" AND DeviceModel = '{0}'", info.DeviceModel);
+                deviceInfo.CommandText += string.Format(" AND DeviceModel = '{0}'", device.DeviceModel);
             }
-            if(info.OsVersion != null)
+            if(device.OsVersion != null)
             {
-                deviceInfo.CommandText += string.Format(" AND OsVersion = '{0}'", info.OsVersion);
+                deviceInfo.CommandText += string.Format(" AND OsVersion = '{0}'", device.OsVersion);
             }
-            if (info.UniqueId != null)
+            if (device.UniqueId != null)
             {
-                deviceInfo.CommandText += string.Format(" AND UniqueId = '{0}'", info.UniqueId);
+                deviceInfo.CommandText += string.Format(" AND UniqueId = '{0}'", device.UniqueId);
             }
             deviceInfo.CommandText += "AND Availible = 1 limit 1";
 
-            var ip = (string)deviceInfo.ExecuteScalar();
+            var reader = deviceInfo.ExecuteReader();
+
+            var match = !reader.HasRows ? null : new DeviceInfo
+                        {
+                            DeviceModel = (string) reader["DeviceModel"],
+                            MobileOs = (MobileOs) Enum.Parse(typeof(MobileOs), (string)reader["MobileOs"]),
+                            IP = (string) reader["IP"],
+                            OsVersion = (string) reader["OsVersion"],
+                            UniqueId = (string) reader["UniqueId"]
+                        };
 
             if (_sharedDb == null)
             {
                 db.Close();
             }
 
-            return ip == null ? null : IPAddress.Parse(ip);
+            return match;
         }
     }
 }

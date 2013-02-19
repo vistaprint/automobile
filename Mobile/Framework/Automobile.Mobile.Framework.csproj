@@ -53,7 +53,12 @@
     <Compile Include="Commands\UrlCommand.cs" />
     <Compile Include="Commands\WaitForReadyCommand.cs" />
     <Compile Include="ConnectionType.cs" />
-    <Compile Include="Device\DeviceInfo.cs" />
+    <Compile Include="Data\DeviceInfo.cs" />
+    <Compile Include="Data\IMobileDb.cs" />
+    <Compile Include="Data\MobileDb.cs" />
+    <Compile Include="Data\RegistrarClient.cs" />
+    <Compile Include="Data\SqlClient.cs" />
+    <Compile Include="Data\UdpClient.cs" />
     <Compile Include="Device\IDevice.cs" />
     <Compile Include="Device\IMobileDevice.cs" />
     <Compile Include="Browser\IMobileBrowser.cs" />

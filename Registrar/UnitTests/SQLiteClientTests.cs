@@ -1,16 +1,17 @@
 ﻿using Automobile.Mobile.Framework;
+using Automobile.Mobile.Framework.Data;
 using Automobile.Mobile.Framework.Device;
 using NUnit.Framework;
 
 namespace Automobile.Registrar.UnitTests
 {
     [TestFixture]
-    public class MobileDbTests
+    public class SQLiteClientTests
     {
         [Test]
         public void TestRegistration()
         {
-            MobileDb.Initialize(":memory:", true);
+            MobileDb.Instance = new SQLiteClient(":memory:", true);
             DeviceInfo info = new DeviceInfo
                               {
                                   DeviceModel = "aDevice",
@@ -19,19 +20,19 @@ namespace Automobile.Registrar.UnitTests
                                   OsVersion = "1.0",
                                   UniqueId = "0"
                               };
-            MobileDb.Submit(info);
-            var match = MobileDb.GetFirstMatch(info);
-            Assert.IsTrue(info.IP == match.ToString(), "Actual: {0} Expected: {1}", match, info.IP);
-            MobileDb.Close();
+            MobileDb.Instance.Submit(info);
+            var match = MobileDb.Instance.GetFirstMatch(info);
+            Assert.IsTrue(info.IP == match.IP, "Actual: {0} Expected: {1}", match.IP, info.IP);
+            MobileDb.Instance.Dispose();
         }
 
         [Test]
         public void TestNoMatch()
         {
-            MobileDb.Initialize(":memory:", true);
+            MobileDb.Instance = new SQLiteClient(":memory:", true);
             // No match should return null
-            Assert.IsNull(MobileDb.GetFirstMatch(new DeviceInfo { MobileOs = MobileOs.Android }));
-            MobileDb.Close();
+            Assert.IsNull(MobileDb.Instance.GetFirstMatch(new DeviceInfo { MobileOs = MobileOs.Android }));
+            MobileDb.Instance.Dispose();
         }
     }
 }
