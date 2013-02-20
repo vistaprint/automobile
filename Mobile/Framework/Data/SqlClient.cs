@@ -17,11 +17,19 @@ SqlClient.cs
 */
 
 using Automobile.Mobile.Framework.Device;
+using System.Data.SqlClient;
 
 namespace Automobile.Mobile.Framework.Data
 {
     public class SqlClient : IMobileDb
     {
+        private string _connectionString;
+
+        public SqlClient(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
         public void Dispose()
         {
             throw new System.NotImplementedException();
@@ -29,7 +37,10 @@ namespace Automobile.Mobile.Framework.Data
 
         public void Submit(DeviceInfo info)
         {
-            throw new System.NotImplementedException();
+            var conn = new SqlConnection(_connectionString);
+            conn.Open();
+            var sql = new SqlCommand(string.Format("exec mob_update_device_registration '{0}', '{1}', '{2}', '{3}'", info.UniqueId, info.MobileOs, info.OsVersion, info.IP), conn);
+            var r = sql.ExecuteNonQuery();
         }
 
         public DeviceInfo GetFirstMatch(DeviceInfo info)

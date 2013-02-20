@@ -1,4 +1,4 @@
-﻿/*
+/*
 Copyright 2013 Vistaprint
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,26 @@ namespace Automobile.Mobile.Framework.Data
 {
     public static class MobileDb
     {
+        public static void CreateUdpClient(string multicastIp, int port)
+        {
+            Instance = new UdpClient(multicastIp, port);
+        }
+
+        public static void CreateSqlClient(string connectionString)
+        {
+            Instance = new SqlClient(connectionString);
+        }
+
+        public static void CreateRegistrarClient(string ip, int port)
+        {
+            Instance = new RegistrarClient();
+        }
+
+        public static void CreateNullClient()
+        {
+            Instance = new NullClient();
+        }
+
         public static IMobileDb Instance { get; internal set; }
     }
 }
