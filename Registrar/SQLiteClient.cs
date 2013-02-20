@@ -47,7 +47,7 @@ namespace Automobile.Registrar
             var db = new SQLiteConnection(_dbName);
             db.Open();
 
-            SQLiteCommand createTable = new SQLiteCommand("create table if not exists DeviceInfo ( MobileOs text, DeviceModel text, OsVersion text, UniqueId text, IP text, LastSeen text, Availible int)", db);
+            SQLiteCommand createTable = new SQLiteCommand("create table if not exists DeviceInfo ( MobileOs text, DeviceModel text, OsVersion text, UniqueId text, IP text, LastSeen text, Availible int, UNIQUE(UniqueId))", db);
             createTable.ExecuteNonQuery();
 
             if(shared)
