@@ -16,23 +16,41 @@ limitations under the License.
 RegistrarClient.cs 
 */
 
+using System.IO;
+using System.Net;
+using System.Runtime.Serialization.Json;
 using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Mobile.Framework.Data
 {
     public class RegistrarClient : IMobileDb
     {
+        private readonly string _baseUrl;
+        private readonly DataContractJsonSerializer _serializer;
+
+        public RegistrarClient(string baseUrl)
+        {
+            _baseUrl = baseUrl;
+            _serializer = new DataContractJsonSerializer(typeof(DeviceInfo));
+        }
+
         public void Dispose()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Submit(DeviceInfo info)
+        public void Submit(DeviceInfo device)
         {
-            throw new System.NotImplementedException();
+            var request = WebRequest.Create(_baseUrl + @"/registrar");
+            _serializer.WriteObject(request.GetRequestStream(), device);
+
+            request.ContentLength = request.GetRequestStream().Length;
+            request.Method = "PUT";
+            request.ContentType = "application/json";
+            request.GetResponse();
         }
 
-        public DeviceInfo GetFirstMatch(DeviceInfo info)
+        public DeviceInfo GetFirstMatch(DeviceInfo device)
         {
             throw new System.NotImplementedException();
         }
