@@ -20,7 +20,7 @@ namespace Automobile.Registrar.UnitTests
                                   OsVersion = "1.0",
                                   UniqueId = "0"
                               };
-            MobileDb.Instance.Submit(info);
+            MobileDb.Instance.Register(info);
             var match = MobileDb.Instance.GetFirstMatch(info);
             Assert.IsTrue(info.IP == match.IP, "Actual: {0} Expected: {1}", match.IP, info.IP);
             MobileDb.Instance.Dispose();

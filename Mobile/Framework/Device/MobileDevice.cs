@@ -91,7 +91,7 @@ namespace Automobile.Mobile.Framework.Device
         {
             _communicator = new TcpServerCommunicator(TCP_PORT);
 
-            MobileDb.Instance.Submit(DeviceInfo);
+            MobileDb.Instance.Register(DeviceInfo);
 
             while (true)
             {

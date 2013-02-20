@@ -8,7 +8,7 @@ namespace Automobile.Mobile.Framework.Data
 {
     public class NullClient : IMobileDb
     {
-        public void Submit(DeviceInfo device) { }
+        public void Register(DeviceInfo device) { }
 
         public DeviceInfo GetFirstMatch(DeviceInfo device) { return null; }
 

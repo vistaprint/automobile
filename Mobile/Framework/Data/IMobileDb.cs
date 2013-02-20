@@ -28,7 +28,7 @@ namespace Automobile.Mobile.Framework.Data
         /// Submit a new device info, and marks it availible for automation
         /// </summary>
         /// <param name="device">info for a new device</param>
-        void Submit(DeviceInfo device);
+        void Register(DeviceInfo device);
 
         /// <summary>
         /// Returns the IP of the first registered device which matches all the info.
