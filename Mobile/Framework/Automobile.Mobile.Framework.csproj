@@ -56,6 +56,7 @@
     <Compile Include="Data\DeviceInfo.cs" />
     <Compile Include="Data\IMobileDb.cs" />
     <Compile Include="Data\MobileDb.cs" />
+    <Compile Include="Data\NullClient.cs" />
     <Compile Include="Data\RegistrarClient.cs" />
     <Compile Include="Data\SqlClient.cs" />
     <Compile Include="Data\UdpClient.cs" />
