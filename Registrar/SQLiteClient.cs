@@ -34,7 +34,7 @@ namespace Automobile.Registrar
         /// Creates tables, if needed.
         /// </summary>
         /// <param name="dbName">Name of the file to use</param>
-        public SQLiteClient(string dbName) : this(dbName, false) {}
+        public SQLiteClient(string dbName) : this(dbName, dbName == ":memory:") {}
 
         /// <summary>
         /// Creates tables, if needed. Optionally creates a shared connection (for in-memory or temporary file db).
@@ -71,7 +71,7 @@ namespace Automobile.Registrar
             }
         }
 
-        public void Submit(DeviceInfo info)
+        public void Register(DeviceInfo info)
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 

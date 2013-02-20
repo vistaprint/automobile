@@ -48,7 +48,7 @@ namespace Automobile.Mobile.Framework.Data
             throw new System.NotImplementedException();
         }
 
-        public void Submit(DeviceInfo info)
+        public void Register(DeviceInfo info)
         {
             _currentInfo = info;
             BeginBroadcast();

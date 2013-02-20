@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="SQLiteClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Mobile\Framework\Automobile.Mobile.Framework.csproj">

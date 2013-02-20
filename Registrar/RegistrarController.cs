@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using Automobile.Mobile.Framework;
+﻿using System.Web.Http;
 using Automobile.Mobile.Framework.Data;
 using Automobile.Mobile.Framework.Device;
 
@@ -25,7 +23,7 @@ namespace Automobile.Registrar
 
         public void PutDevice(DeviceInfo device)
         {
-            MobileDb.Instance.Submit(device);
+            MobileDb.Instance.Register(device);
         }
     }
 }

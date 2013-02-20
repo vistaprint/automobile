@@ -35,7 +35,7 @@ namespace Automobile.Mobile.Framework.Data
             throw new System.NotImplementedException();
         }
 
-        public void Submit(DeviceInfo info)
+        public void Register(DeviceInfo info)
         {
             var conn = new SqlConnection(_connectionString);
             conn.Open();

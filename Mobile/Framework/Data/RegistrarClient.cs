@@ -39,14 +39,17 @@ namespace Automobile.Mobile.Framework.Data
             throw new System.NotImplementedException();
         }
 
-        public void Submit(DeviceInfo device)
+        public void Register(DeviceInfo device)
         {
             var request = WebRequest.Create(_baseUrl + @"/registrar");
-            _serializer.WriteObject(request.GetRequestStream(), device);
-
-            request.ContentLength = request.GetRequestStream().Length;
             request.Method = "PUT";
             request.ContentType = "application/json";
+            using (var stream = new MemoryStream())
+            {
+                _serializer.WriteObject(stream, device);
+                request.ContentLength = stream.Length;
+                stream.WriteTo(request.GetRequestStream());
+            }
             request.GetResponse();
         }
 
