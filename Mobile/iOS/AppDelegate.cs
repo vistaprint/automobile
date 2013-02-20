@@ -44,7 +44,7 @@ namespace iOS
 			// Load settings
 			var conn = NSUserDefaults.StandardUserDefaults.StringForKey("connType");
 			var connType = conn == null ? ConnectionType.DbRegistration : (ConnectionType) Enum.Parse(typeof(ConnectionType), conn);
-			var connString = NSUserDefaults.StandardUserDefaults.StringForKey("connString") ?? "Server=dbinfra.vistaprint.net;Database=QAplatform;UID=qaplatform;PWD=@utom@t3QA";
+			var connString = NSUserDefaults.StandardUserDefaults.StringForKey("connString")";
 
 			// Init config controller
 			var webController = new iOSWebViewController(connType, connString);
