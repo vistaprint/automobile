@@ -41,7 +41,7 @@ namespace Automobile.Mobile.Framework.Data
 
         public void Register(DeviceInfo device)
         {
-            var request = WebRequest.Create(_baseUrl + @"/registrar");
+            var request = WebRequest.Create(_baseUrl + "/registrar/device");
             request.Method = "PUT";
             request.ContentType = "application/json";
             using (var stream = new MemoryStream())
@@ -55,12 +55,37 @@ namespace Automobile.Mobile.Framework.Data
 
         public DeviceInfo GetFirstMatch(DeviceInfo device)
         {
+            var url = _baseUrl +
+                      string.Format(
+                          "/registrar/device?MobileOs={0}&DeviceModel={1}&OsVersion={2}&UniqueId={3}",
+                          device.MobileOs, device.DeviceModel, device.OsVersion, device.UniqueId);
+
+            var request = WebRequest.Create(url);
+            try
+            {
+                var response = request.GetResponse();            
+                var responseStream = response.GetResponseStream();
+                return responseStream == null ? null : (DeviceInfo) _serializer.ReadObject(responseStream);
+            }
+            catch(WebException e)
+            {
+                if ((e.Response as HttpWebResponse).StatusCode == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+                throw;
+            }
+        }
+
+        public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
+        {
             throw new System.NotImplementedException();
         }
 
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
-            throw new System.NotImplementedException();
+            var request = WebRequest.Create(string.Format("{0}/registrar/device/{1}?availible={2}", _baseUrl, device.UniqueId, availible));
+            request.GetResponse();
         }
     }
 }

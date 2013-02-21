@@ -48,6 +48,11 @@ namespace Automobile.Mobile.Framework.Data
             throw new System.NotImplementedException();
         }
 
+        public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
             throw new System.NotImplementedException();

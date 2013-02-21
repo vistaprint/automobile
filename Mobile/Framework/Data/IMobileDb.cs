@@ -32,11 +32,20 @@ namespace Automobile.Mobile.Framework.Data
 
         /// <summary>
         /// Returns the IP of the first registered device which matches all the info.
+        /// Null values are ignored in the match, only searches availible devices
+        /// </summary>
+        /// <param name="device">Info to match</param>
+        /// <returns>Full info of first match</returns>
+        DeviceInfo GetFirstMatch(DeviceInfo device);
+
+        /// <summary>
+        /// Returns the IP of the first registered device which matches all the info.
         /// Null values are ignored in the match
         /// </summary>
         /// <param name="device">Info to match</param>
-        /// <returns>IP of the first match</returns>
-        DeviceInfo GetFirstMatch(DeviceInfo device);
+        /// <param name="filterByAvailible">if true, only return availible devices</param>
+        /// <returns>Full info of first match</returns>
+        DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible);
 
         /// <summary>
         /// Set if a device is availible for automation (default for a new device is true)
