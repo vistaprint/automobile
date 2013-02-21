@@ -55,7 +55,7 @@ namespace Automobile.Mobile.Framework.Data
 
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
-            throw new System.NotImplementedException();
+            // TODO: this
         }
     }
 }

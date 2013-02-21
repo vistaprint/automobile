@@ -33,7 +33,6 @@ namespace Automobile.Mobile.Framework.Device
     /// </summary>
     public abstract class MobileDevice : IMobileDevice
     {
-        private ConnectionType _connectionType;
         private TcpCommunicator _communicator;
 
         // TODO: make configable
@@ -42,8 +41,7 @@ namespace Automobile.Mobile.Framework.Device
 
         protected MobileDevice(ConnectionType connectionType, string connectionString)
         {
-            _connectionType = connectionType;
-
+            // Create appropriate Client for our connection type
             switch (connectionType)
             {
                 case ConnectionType.DbRegistration:
@@ -53,10 +51,10 @@ namespace Automobile.Mobile.Framework.Device
                     MobileDb.CreateNullClient();
                     break;
                 case ConnectionType.Registrar:
-                    MobileDb.CreateRegistrarClient(connectionString, 0); // TODO: Figure out port for this
+                    MobileDb.CreateRegistrarClient(connectionString);
                     break;
                 case ConnectionType.UdpBroadcast:
-                    MobileDb.CreateUdpClient(connectionString, 0); // TODO: Figure out port for this
+                    MobileDb.CreateUdpClient(connectionString, UDP_PORT);
                     break;
             }
 
