@@ -29,9 +29,9 @@ namespace Automobile.Mobile.Framework.Data
             Instance = new SqlClient(connectionString);
         }
 
-        public static void CreateRegistrarClient(string hostname, int port)
+        public static void CreateRegistrarClient(string hostname)
         {
-            Instance = new RegistrarClient(string.Format(@"http://{0}:{1}", hostname, port));
+            Instance = new RegistrarClient(hostname);
         }
 
         public static void CreateNullClient()

@@ -17,8 +17,6 @@ IMobileDb.cs
 */
 
 using System;
-using System.Net;
-using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Mobile.Framework.Data
 {
