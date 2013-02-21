@@ -15,6 +15,9 @@ limitations under the License.
 
 ILocalDevice.cs 
 */
+
+using Automobile.Mobile.Framework.Data;
+
 namespace Automobile.Mobile.Framework.Device
 {
     /// <summary>

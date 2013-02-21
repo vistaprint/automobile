@@ -15,7 +15,7 @@ limitations under the License.
 
 DeviceInfo.cs 
 */
-namespace Automobile.Mobile.Framework.Device
+namespace Automobile.Mobile.Framework.Data
 {
     /// <summary>
     /// Collection of information of a device

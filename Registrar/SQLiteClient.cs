@@ -15,7 +15,6 @@ limitations under the License.
 
 SQLiteClient.cs 
 */
-
 using System;
 using System.Data.SQLite;
 using Automobile.Mobile.Framework;
@@ -90,7 +89,21 @@ namespace Automobile.Registrar
 
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
-            throw new System.NotImplementedException();
+            var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
+
+            SQLiteCommand availUpdate = new SQLiteCommand(db);
+            availUpdate.CommandText = string.Format("UPDATE DeviceInfo SET Availible = {0} WHERE UniqueId = {1}", availible ? 1 : 0, device.UniqueId);
+            availUpdate.ExecuteNonQuery();
+
+            if (_sharedDb == null)
+            {
+                db.Close();
+            }
+        }
+
+        public DeviceInfo GetFirstMatch(DeviceInfo device)
+        {
+            return GetFirstMatch(device, true);
         }
 
         /// <summary>
@@ -98,8 +111,9 @@ namespace Automobile.Registrar
         /// Null values are ignored in the match
         /// </summary>
         /// <param name="info">Info to match</param>
+        /// <param name="filterByAvailible"> </param>
         /// <returns>IP of the first match</returns>
-        public DeviceInfo GetFirstMatch(DeviceInfo device)
+        public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 
@@ -118,7 +132,11 @@ namespace Automobile.Registrar
             {
                 deviceInfo.CommandText += string.Format(" AND UniqueId = '{0}'", device.UniqueId);
             }
-            deviceInfo.CommandText += "AND Availible = 1 limit 1";
+            if(filterByAvailible)
+            {
+                deviceInfo.CommandText += " AND Availible = 1";
+            }
+            deviceInfo.CommandText += " limit 1";
 
             var reader = deviceInfo.ExecuteReader();
 

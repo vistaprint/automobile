@@ -59,6 +59,11 @@ namespace Automobile.Mobile.Framework.Data
             throw new System.NotImplementedException();
         }
 
+        public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
             if (availible && !_timer.Enabled)
