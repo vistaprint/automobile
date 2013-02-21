@@ -36,6 +36,7 @@ namespace Automobile.Mobile.Android.Config
 
             var prefs = GetSharedPreferences("AutomationConfig", FileCreationMode.WorldWriteable);
             var startAutomation = FindViewById<Button>(Resource.Id.StartAutomation);
+            var registrarButton = FindViewById<RadioButton>(Resource.Id.registrarButton);
             var dbButton = FindViewById<RadioButton>(Resource.Id.dbButton);
             var directButton = FindViewById<RadioButton>(Resource.Id.directButton);
             var connStringText = FindViewById<TextView>(Resource.Id.ConnectionStringTextView);
@@ -47,6 +48,16 @@ namespace Automobile.Mobile.Android.Config
                 prefs.Edit().PutInt(connTypeKey, (int)ConnectionType.Direct).Commit();
             }
 
+
+
+            registrarButton.Click += (sender, args) =>
+                              {
+                                  var view =
+                                      FindViewById<LinearLayout>(Resource.Id.ServerLayout).Visibility =
+                                      ViewStates.Visible;
+                                  prefs.Edit().PutInt(connTypeKey, (int) ConnectionType.Registrar).
+                                      PutString(connStringKey, connStringText.Text).Commit();
+                              };
             dbButton.Click += (sender, args) =>
                               {
                                   var view =
