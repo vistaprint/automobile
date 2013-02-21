@@ -18,20 +18,16 @@ RegistrarClient.cs
 
 using System.IO;
 using System.Net;
-using System.Runtime.Serialization.Json;
-using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Mobile.Framework.Data
 {
     public class RegistrarClient : IMobileDb
     {
         private readonly string _baseUrl;
-        private readonly DataContractJsonSerializer _serializer;
 
         public RegistrarClient(string baseUrl)
         {
             _baseUrl = baseUrl;
-            _serializer = new DataContractJsonSerializer(typeof(DeviceInfo));
         }
 
         public void Dispose()
@@ -46,7 +42,6 @@ namespace Automobile.Mobile.Framework.Data
             request.ContentType = "application/json";
             using (var stream = new MemoryStream())
             {
-                _serializer.WriteObject(stream, device);
                 request.ContentLength = stream.Length;
                 stream.WriteTo(request.GetRequestStream());
             }
@@ -65,7 +60,11 @@ namespace Automobile.Mobile.Framework.Data
             {
                 var response = request.GetResponse();            
                 var responseStream = response.GetResponseStream();
-                return responseStream == null ? null : (DeviceInfo) _serializer.ReadObject(responseStream);
+                if(responseStream == null)
+                {
+                    return null;
+                }
+                return null;
             }
             catch(WebException e)
             {
