@@ -26,8 +26,8 @@ using Android.OS;
 using Android.Telephony;
 using Android.Webkit;
 using Android.Text.Format;
-using Automobile.Mobile.Android.Config;
 using Automobile.Mobile.Framework;
+using Automobile.Mobile.Framework.Data;
 using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Mobile.Android.Automation
@@ -54,8 +54,8 @@ namespace Automobile.Mobile.Android.Automation
             DeviceInfo.OsVersion = Build.VERSION.Release;
             DeviceInfo.IP = IP;
             var tm = (TelephonyManager)activity.GetSystemService(Context.TelephonyService);
-            DeviceInfo.UniqueId = tm.DeviceId;   
-        } 
+            DeviceInfo.UniqueId = tm.DeviceId;
+        }
 
         public WebView WebView
         {

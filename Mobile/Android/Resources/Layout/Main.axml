@@ -27,6 +27,11 @@
             android:layout_height="wrap_content"
             android:text="DB Registration"
             android:id="@+id/dbButton" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar Service"
+            android:id="@+id/registrarButton" />
     </RadioGroup>
     <LinearLayout
         android:orientation="vertical"
@@ -40,7 +45,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ConnectionStringTextView"
-            android:hint="Connection String" />
+            android:hint="Server Info" />
     </LinearLayout>
     <Button
         android:id="@+id/StartAutomation"
