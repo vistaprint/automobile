@@ -18,6 +18,8 @@ RegistrarClient.cs
 
 using System.IO;
 using System.Net;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace Automobile.Mobile.Framework.Data
 {
@@ -40,11 +42,10 @@ namespace Automobile.Mobile.Framework.Data
             var request = WebRequest.Create(_baseUrl + "/registrar/device");
             request.Method = "PUT";
             request.ContentType = "application/json";
-            using (var stream = new MemoryStream())
-            {
-                request.ContentLength = stream.Length;
-                stream.WriteTo(request.GetRequestStream());
-            }
+            var str = JsonConvert.SerializeObject(device);
+            var count = Encoding.ASCII.GetByteCount(str);
+            request.ContentLength = count;
+            request.GetRequestStream().Write(Encoding.ASCII.GetBytes(str), 0, count);
             request.GetResponse();
         }
 
@@ -64,7 +65,8 @@ namespace Automobile.Mobile.Framework.Data
                 {
                     return null;
                 }
-                return null;
+                var str = new StreamReader(responseStream).ReadToEnd();
+                return JsonConvert.DeserializeObject<DeviceInfo>(str);
             }
             catch(WebException e)
             {
