@@ -20,7 +20,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Automobile.Mobile.Framework.Browser;
 
-namespace iOS.Automation
+namespace Automobile.Mobile.iOS.Automation
 {
 	public class iOSBrowser : MobileBrowser
 	{

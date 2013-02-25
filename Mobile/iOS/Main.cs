@@ -22,7 +22,7 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
-namespace iOS
+namespace Automobile.Mobile.iOS
 {
 	public class Application
 	{

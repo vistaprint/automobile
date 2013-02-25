@@ -20,7 +20,7 @@ using System.Threading;
 using MonoTouch.UIKit;
 using Automobile.Mobile.Framework;
 
-namespace iOS.Automation
+namespace Automobile.Mobile.iOS.Automation
 {
 	public class iOSWebViewController : UIViewController
 	{
