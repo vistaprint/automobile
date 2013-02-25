@@ -29,9 +29,9 @@ namespace Automobile.Mobile.Framework.Data
             Instance = new SqlClient(connectionString);
         }
 
-        public static void CreateRegistrarClient(string hostname)
+        public static void CreateRegistrarClient(string hostname, IJsonProvider json)
         {
-            Instance = new RegistrarClient(hostname);
+            Instance = new RegistrarClient(hostname, json);
         }
 
         public static void CreateNullClient()

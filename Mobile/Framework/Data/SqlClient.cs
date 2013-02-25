@@ -40,7 +40,7 @@ namespace Automobile.Mobile.Framework.Data
             var conn = new SqlConnection(_connectionString);
             conn.Open();
             var sql = new SqlCommand(string.Format("exec mob_update_device_registration '{0}', '{1}', '{2}', '{3}'", info.UniqueId, info.MobileOs, info.OsVersion, info.IP), conn);
-            var r = sql.ExecuteNonQuery();
+            sql.ExecuteNonQuery();
         }
 
         public DeviceInfo GetFirstMatch(DeviceInfo info)

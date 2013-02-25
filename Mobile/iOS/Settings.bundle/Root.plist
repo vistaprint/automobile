@@ -42,6 +42,7 @@
 			<array>
 				<string>direct</string>
 				<string>dbregistration</string>
+				<string>registrar</string>
 			</array>
 		</dict>
 	</array>

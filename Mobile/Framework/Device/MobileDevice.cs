@@ -39,7 +39,9 @@ namespace Automobile.Mobile.Framework.Device
         private const int TCP_PORT = 4242;
         private const int UDP_PORT = 4343;
 
-        protected MobileDevice(ConnectionType connectionType, string connectionString)
+        protected MobileDevice(ConnectionType connectionType, string connectionString) : this(connectionType, connectionString, null) { }
+
+        protected MobileDevice(ConnectionType connectionType, string connectionString, IJsonProvider json)
         {
             // Create appropriate Client for our connection type
             switch (connectionType)
@@ -51,7 +53,7 @@ namespace Automobile.Mobile.Framework.Device
                     MobileDb.CreateNullClient();
                     break;
                 case ConnectionType.Registrar:
-                    MobileDb.CreateRegistrarClient(connectionString);
+                    MobileDb.CreateRegistrarClient(connectionString, json);
                     break;
                 case ConnectionType.UdpBroadcast:
                     MobileDb.CreateUdpClient(connectionString, UDP_PORT);

@@ -19,17 +19,18 @@ RegistrarClient.cs
 using System.IO;
 using System.Net;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace Automobile.Mobile.Framework.Data
 {
     public class RegistrarClient : IMobileDb
     {
         private readonly string _baseUrl;
+        private readonly IJsonProvider _json;
 
-        public RegistrarClient(string baseUrl)
+        public RegistrarClient(string baseUrl, IJsonProvider json)
         {
             _baseUrl = baseUrl;
+            _json = json;
         }
 
         public void Dispose() { }
@@ -39,7 +40,7 @@ namespace Automobile.Mobile.Framework.Data
             var request = WebRequest.Create(_baseUrl + "/registrar/device");
             request.Method = "PUT";
             request.ContentType = "application/json";
-            var str = JsonConvert.SerializeObject(device);
+            var str = _json.Serialize(device);
             var count = Encoding.ASCII.GetByteCount(str);
             request.ContentLength = count;
             request.GetRequestStream().Write(Encoding.ASCII.GetBytes(str), 0, count);
@@ -63,7 +64,7 @@ namespace Automobile.Mobile.Framework.Data
                     return null;
                 }
                 var str = new StreamReader(responseStream).ReadToEnd();
-                return JsonConvert.DeserializeObject<DeviceInfo>(str);
+                return _json.Deserialize<DeviceInfo>(str);
             }
             catch(WebException e)
             {

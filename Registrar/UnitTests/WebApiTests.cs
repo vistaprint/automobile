@@ -31,7 +31,7 @@ namespace Automobile.Registrar.UnitTests
         [Test]
         public void TestNoMatch()
         {
-            var client = new RegistrarClient(BaseUrl);
+            var client = new RegistrarClient(BaseUrl, new JsonProvider());
 
             var info = new DeviceInfo
             {
@@ -49,7 +49,7 @@ namespace Automobile.Registrar.UnitTests
         [Test]
         public void TestRegistration()
         {
-            var client = new RegistrarClient(BaseUrl);
+            var client = new RegistrarClient(BaseUrl, new JsonProvider());
 
             var info = new DeviceInfo
             {
@@ -68,7 +68,7 @@ namespace Automobile.Registrar.UnitTests
         [Test]
         public void TestAvailibility()
         {
-            var client = new RegistrarClient(BaseUrl);
+            var client = new RegistrarClient(BaseUrl, new JsonProvider());
 
             var info = new DeviceInfo
             {

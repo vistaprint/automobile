@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Libs\Json.NET\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel.Web" />
@@ -58,6 +55,7 @@
     <Compile Include="Commands\WaitForReadyCommand.cs" />
     <Compile Include="ConnectionType.cs" />
     <Compile Include="Data\DeviceInfo.cs" />
+    <Compile Include="Data\IJsonProvider.cs" />
     <Compile Include="Data\IMobileDb.cs" />
     <Compile Include="Data\MobileDb.cs" />
     <Compile Include="Data\NullClient.cs" />

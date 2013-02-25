@@ -23,15 +23,18 @@ using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
 using Automobile.Mobile.Framework.Device;
 using Automobile.Mobile.Framework;
+using Automobile.Mobile.Framework.Data;
+using Newtonsoft.Json;
+using System.Text;
 
 
-namespace iOS.Automation
+namespace Automobile.Mobile.iOS.Automation
 {
 	public class iOSDevice : MobileDevice
 	{
 		private readonly UIDevice _device;
 		
-		public iOSDevice (UIDevice device, UIWebView webView, ConnectionType connType, string connString) : base(connType, connString)
+		public iOSDevice (UIDevice device, UIWebView webView, ConnectionType connType, string connString) : base(connType, connString, new JsonProvider())
 		{
 			_device = device;
 			Browser = new iOSBrowser(webView);

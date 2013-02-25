@@ -50,6 +50,9 @@
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json.MonoDroid">
+      <HintPath>..\..\Libs\Json.NET\Android\Newtonsoft.Json.MonoDroid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +64,7 @@
     <Compile Include="Automation\AndroidChromeClient.cs" />
     <Compile Include="Automation\AndroidDevice.cs" />
     <Compile Include="Automation\AndroidWebClient.cs" />
+    <Compile Include="Automation\JsonProvider.cs" />
     <Compile Include="Config\ConfigActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
