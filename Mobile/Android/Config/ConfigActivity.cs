@@ -76,11 +76,8 @@ namespace Automobile.Mobile.Android.Config
                                };
             startAutomation.Click += (sender, args) =>
                                      {
-                                         if(dbButton.Checked)
-                                         {
-                                             prefs.Edit().PutString(connStringKey, connStringText.Text).Commit();
-                                         }
-                                         StartActivity(typeof (AutomationActivity));
+                                        prefs.Edit().PutString(connStringKey, connStringText.Text).Commit();
+                                        StartActivity(typeof (AutomationActivity));
                                      };
 
             
