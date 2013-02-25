@@ -32,10 +32,7 @@ namespace Automobile.Mobile.Framework.Data
             _baseUrl = baseUrl;
         }
 
-        public void Dispose()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Dispose() { }
 
         public void Register(DeviceInfo device)
         {
