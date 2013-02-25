@@ -18,10 +18,10 @@ AppDelegate.cs
 using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using iOS.Automation;
+using Automobile.Mobile.iOS.Automation;
 using Automobile.Mobile.Framework;
 
-namespace iOS
+namespace Automobile.Mobile.iOS
 {
 	// The UIApplicationDelegate for the application. This class is responsible for launching the 
 	// User Interface of the application, as well as listening (and optionally responding) to 
@@ -43,8 +43,8 @@ namespace iOS
 		{
 			// Load settings
 			var conn = NSUserDefaults.StandardUserDefaults.StringForKey("connType");
-			var connType = conn == null ? ConnectionType.DbRegistration : (ConnectionType) Enum.Parse(typeof(ConnectionType), conn);
-			var connString = NSUserDefaults.StandardUserDefaults.StringForKey("connString")";
+			var connType = conn == null ? ConnectionType.Registrar : (ConnectionType) Enum.Parse(typeof(ConnectionType), conn);
+			var connString = NSUserDefaults.StandardUserDefaults.StringForKey("connString") ?? "http://devdstiert.vistaprint.net:8080/";
 
 			// Init config controller
 			var webController = new iOSWebViewController(connType, connString);

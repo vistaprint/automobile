@@ -22,7 +22,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Automobile.Mobile.Framework.Browser;
 
-namespace iOS.Automation
+namespace Automobile.Mobile.iOS.Automation
 {
 	/// <summary>
 	/// Handles events from a webview
