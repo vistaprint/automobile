@@ -28,6 +28,10 @@ local.properties
 # PDT-specific
 .buildpath
 
+#################
+## MonoDevelop/Xamarin Studio
+#################
+.userprefs
 
 #################
 ## Visual Studio
