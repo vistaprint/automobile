@@ -39,7 +39,7 @@ namespace Automobile.Mobile.Android.Automation
     {
         private readonly Activity _activity;
 
-        public AndroidDevice(Activity activity, ConnectionType connectionType, string connectionString) : base(connectionType, connectionString)
+        public AndroidDevice(Activity activity, ConnectionType connectionType, string connectionString) : base(connectionType, connectionString, new JsonProvider())
         {
             // Setup the WebView/Browser
             _activity = activity;

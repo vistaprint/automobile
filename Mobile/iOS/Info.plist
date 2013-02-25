@@ -12,7 +12,7 @@
 		<string>Resources/phone_icon_144.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.vistaprint.automobile</string>
+	<string>com.vistaprint.automation</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
