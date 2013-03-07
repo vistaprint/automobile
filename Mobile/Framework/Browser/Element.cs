@@ -35,7 +35,7 @@ namespace Automobile.Mobile.Framework.Browser
 
         public void Click()
         {
-            OwnerBrowser.ExecJavascript(JQuery.Format(Selector, ".click()"));
+            OwnerBrowser.ExecJavascript(JQuery.Format(Selector, "[0].click()"));
         }
 
         public IEnumerable<Element> Children
