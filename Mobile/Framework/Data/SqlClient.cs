@@ -16,14 +16,14 @@ limitations under the License.
 SqlClient.cs 
 */
 
-using Automobile.Mobile.Framework.Device;
+using System;
 using System.Data.SqlClient;
 
 namespace Automobile.Mobile.Framework.Data
 {
     public class SqlClient : IMobileDb
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         public SqlClient(string connectionString)
         {
@@ -32,30 +32,44 @@ namespace Automobile.Mobile.Framework.Data
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            // Nothing to do here for sql
         }
 
-        public void Register(DeviceInfo info)
+        public void Register(DeviceInfo device)
         {
             var conn = new SqlConnection(_connectionString);
             conn.Open();
-            var sql = new SqlCommand(string.Format("exec mob_update_device_registration '{0}', '{1}', '{2}', '{3}'", info.UniqueId, info.MobileOs, info.OsVersion, info.IP), conn);
+            var sql = new SqlCommand(string.Format("exec mob_update_device_registration '{0}', '{1}', '{2}', '{3}'", device.UniqueId, device.MobileOs, device.OsVersion, device.IP), conn);
             sql.ExecuteNonQuery();
         }
 
-        public DeviceInfo GetFirstMatch(DeviceInfo info)
+        public DeviceInfo GetFirstMatch(DeviceInfo device)
         {
-            throw new System.NotImplementedException();
+            return GetFirstMatch(device, true);
         }
 
         public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
         {
-            throw new System.NotImplementedException();
+            var conn = new SqlConnection(_connectionString);
+            conn.Open();
+            var sql = new SqlCommand(string.Format("exec mob_get_first_match '{0}', '{1}', '{2}', '{3}', {4}", device.UniqueId, device.MobileOs, device.OsVersion, device.IP, filterByAvailible ? 1 : 0), conn);
+            var reader = sql.ExecuteReader();
+
+            return new DeviceInfo
+                       {
+                           UniqueId = (string) reader["device_id"],
+                           MobileOs = (MobileOs) Enum.Parse(typeof(MobileOs), (string)reader["mobile_od"]),
+                           OsVersion =  (string) reader["os_version"],
+                           IP = (string) reader["ip"]
+                       };
         }
 
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
-            // TODO: this
+            var conn = new SqlConnection(_connectionString);
+            conn.Open();
+            var sql = new SqlCommand(string.Format("exec mob_set_availibility '{0}', {1}", device.UniqueId, availible ? 1 : 0), conn);
+            sql.ExecuteNonQuery();
         }
     }
 }
