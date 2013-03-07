@@ -77,7 +77,7 @@
       <HintPath>..\Framework\bin\Debug\Automobile.Mobile.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.MonoTouch">
-      <HintPath>..\..\Libs\Json.NET\iOS\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Libs\Json.NET\iOS\Newtonsoft.Json.MonoTouch.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
