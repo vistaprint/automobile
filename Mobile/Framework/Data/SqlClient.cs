@@ -17,6 +17,7 @@ SqlClient.cs
 */
 
 using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Automobile.Mobile.Framework.Data
@@ -52,16 +53,27 @@ namespace Automobile.Mobile.Framework.Data
         {
             var conn = new SqlConnection(_connectionString);
             conn.Open();
-            var sql = new SqlCommand(string.Format("exec mob_get_first_match '{0}', '{1}', '{2}', '{3}', {4}", device.UniqueId, device.MobileOs, device.OsVersion, device.IP, filterByAvailible ? 1 : 0), conn);
+            var sql = new SqlCommand(string.Format("exec mob_get_first_match @ID, @OS, @VERSION, @IP, @AVAILIBLE"), conn);
+            sql.Parameters.Add(new SqlParameter("@ID", SqlDbType.VarChar, 128) {Value = (object)device.UniqueId ?? DBNull.Value });
+            sql.Parameters.Add(new SqlParameter("@OS", SqlDbType.VarChar, 64) { Value = (object)device.MobileOs ?? DBNull.Value });
+            sql.Parameters.Add(new SqlParameter("@VERSION", SqlDbType.VarChar, 32) { Value = (object)device.OsVersion ?? DBNull.Value });
+            sql.Parameters.Add(new SqlParameter("@IP", SqlDbType.VarChar, 16) { Value = (object)device.IP ?? DBNull.Value });
+            sql.Parameters.Add(new SqlParameter("@AVAILIBLE", SqlDbType.Bit) {Value = filterByAvailible});
             var reader = sql.ExecuteReader();
 
-            return new DeviceInfo
-                       {
-                           UniqueId = (string) reader["device_id"],
-                           MobileOs = (MobileOs) Enum.Parse(typeof(MobileOs), (string)reader["mobile_od"]),
-                           OsVersion =  (string) reader["os_version"],
-                           IP = (string) reader["ip"]
-                       };
+            if(reader.HasRows)
+            {
+                reader.Read();
+                return new DeviceInfo
+                {
+                    UniqueId = (string)reader["device_id"],
+                    MobileOs = (MobileOs)Enum.Parse(typeof(MobileOs), (string)reader["mobile_os"]),
+                    OsVersion = (string)reader["os_version"],
+                    IP = (string)reader["ip"]
+                }; 
+            }
+
+            return null;
         }
 
         public void SetAvailibility(DeviceInfo device, bool availible)

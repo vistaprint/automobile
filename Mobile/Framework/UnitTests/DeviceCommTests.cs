@@ -4,6 +4,7 @@ using Automobile.Mobile.Framework.UnitTests.Helpers;
 
 namespace Automobile.Mobile.Framework.UnitTests
 {
+    [TestFixture]
     public class DeviceCommTests
     {
         public MobileDeviceDummy Local { get; set; }

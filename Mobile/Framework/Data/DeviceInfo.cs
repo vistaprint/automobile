@@ -25,7 +25,7 @@ namespace Automobile.Mobile.Framework.Data
     {
         public DeviceInfo() {}
 
-        public MobileOs MobileOs { get; set; }
+        public MobileOs? MobileOs { get; set; }
         public string DeviceModel { get; set; }
         public string OsVersion { get; set; }
         public string UniqueId { get; set; }

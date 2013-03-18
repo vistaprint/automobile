@@ -49,6 +49,7 @@
     <Compile Include="Helpers\LocalDeviceDummy.cs" />
     <Compile Include="Helpers\MobileBrowserDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Automobile.Mobile.Framework.csproj">
