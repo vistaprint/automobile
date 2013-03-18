@@ -20,7 +20,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 CREATE TABLE [dbo].[mob_device_register](
 	[device_register_id] [int] IDENTITY(1,1) NOT NULL,
-	[device_id] [varchar](32) NOT NULL,
+	[device_id] [varchar](128) NOT NULL,
 	[mobile_os] [varchar](64) NOT NULL,
 	[os_version] [varchar](32) NOT NULL,
 	[ip] [varchar](16) NOT NULL,

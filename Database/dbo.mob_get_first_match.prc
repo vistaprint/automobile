@@ -25,7 +25,7 @@ GO
 
 CREATE  PROCEDURE [dbo].[mob_get_first_match]
 (
-	@DEVICE_ID varchar(32) = NULL,
+	@DEVICE_ID varchar(128) = NULL,
 	@OS varchar(64) = NULL,
 	@OS_VERSION varchar(32) = NULL,
 	@IP varchar(16) = NULL,
@@ -46,7 +46,7 @@ if @DEVICE_ID IS NOT NULL
 	SELECT @sql = @sql + ' AND d.device_id = @DEVICE_ID'
 
 if @OS IS NOT NULL
-	SELECT @sql = @sql + ' AND d.os = @OS'
+	SELECT @sql = @sql + ' AND d.mobile_os = @OS'
 	
 if @OS_VERSION IS NOT NULL
 	SELECT @sql = @sql + ' AND d.os_version = @OS_VERSION'
@@ -57,7 +57,7 @@ if @IP IS NOT NULL
 if @AVAILIBLE = 1
 	SELECT @sql = @sql + ' AND d.availible = 1'
 
-SELECT @paramlist ='@DEVICE_ID varchar(32),
+SELECT @paramlist ='@DEVICE_ID varchar(128),
 					@OS varchar(64),
 					@OS_VERSION varchar(32),
 					@IP varchar(16)'

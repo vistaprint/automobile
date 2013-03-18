@@ -26,7 +26,7 @@ GO
 
 CREATE  PROCEDURE [dbo].[mob_update_device_registration]
 (
-	@DEVICE_ID varchar(32),
+	@DEVICE_ID varchar(128),
 	@OS varchar(64),
 	@OS_VERSION varchar(32),
 	@IP varchar(16)
@@ -37,11 +37,11 @@ BEGIN TRANSACTION
 SET NOCOUNT ON
 	if not exists (SELECT 1 FROM [dbo].[mob_device_register] WITH (updlock, rowlock, holdlock) WHERE device_id = @DEVICE_ID )
 	BEGIN
-		INSERT INTO [dbo].[mob_device_register](device_id, mobile_os, os_version, ip) VALUES (@DEVICE_ID, @OS, @OS_VERSION, @IP)
+		INSERT INTO [dbo].[mob_device_register](device_id, mobile_os, os_version, ip, availible) VALUES (@DEVICE_ID, @OS, @OS_VERSION, @IP, 1)
 	END
 	else
 	BEGIN
-		UPDATE [dbo].[mob_device_register] SET ip = @IP WHERE device_id = @DEVICE_ID
+		UPDATE [dbo].[mob_device_register] SET ip = @IP, availible = 1 WHERE device_id = @DEVICE_ID
 	END
 COMMIT TRANSACTION
 END
