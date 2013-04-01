@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommunicationException.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
-    <Compile Include="Messaging\ISimpleMessage.cs" />
+    <Compile Include="Messaging\IMessage.cs" />
+    <Compile Include="Messaging\Message.cs" />
     <Compile Include="Messaging\Response.cs" />
     <Compile Include="OverrideBinder.cs" />
     <Compile Include="Tcp\TcpClientCommunicator.cs" />

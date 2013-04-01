@@ -13,28 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Response.cs 
+CommunicationException.cs 
 */
+
 using System;
 
-namespace Automobile.Communication.Messaging
+namespace Automobile.Communication
 {
-    [Serializable]
-    public class Response : IResponse
+    public class CommunicationException : Exception
     {
-        public Response(Guid guid)
-        {
-            Guid = guid;
-            Timestamp = DateTime.Now;
-        }
+        public CommunicationException(string message) : base(message) {}
 
-        public Response(Guid guid, bool success) : this(guid)
-        {
-            Success = success;
-        }
-
-        public Guid Guid { get; private set; }
-        public DateTime Timestamp { get; set; }
-        public bool Success { get; set; }
+        public CommunicationException(string message, Exception inner) : base (message, inner) {}
     }
 }

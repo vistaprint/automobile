@@ -81,10 +81,21 @@ namespace Automobile.Communication
         {
             message.Timestamp = DateTime.Now;
             Write(message);
-            var obj = Read();
+            var obj = Read() as IResponse;
+
+            if(obj == null)
+            {
+                throw new CommunicationException("Non-Response object recieved when response expected.");
+            }
+
             if(obj is IPayload<Exception>)
             {
-                throw (obj as IPayload<Exception>).Contents;
+                throw new CommunicationException("Recieved exception from endpoint: ", (obj as IPayload<Exception>).Contents);
+            }
+
+            if(message.Guid != obj.Guid)
+            {
+                throw new CommunicationException("Recieved response did not match sent message.");
             }
 
             return (TResponse) obj;

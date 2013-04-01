@@ -100,7 +100,7 @@ namespace Automobile.Mobile.Framework.Device
 
                 while (_communicator.Connected)
                 {
-                    Response response;
+                    IResponse response;
                     var message = _communicator.WaitForMessage<Command>();
                     try
                     {
@@ -108,7 +108,7 @@ namespace Automobile.Mobile.Framework.Device
                         {
                             case CommandType.ExecJavascript:
                                 var jsCommand = message as ExecJavascriptCommand;
-                                response = new CommandResponse<string>(true, Browser.ExecJavascript(jsCommand.Javascript));
+                                response = message.CreateResponse(Browser.ExecJavascript(jsCommand.Javascript));
                                 break;
                             case CommandType.Url:
                                 var urlCommand = message as UrlCommand;
@@ -116,11 +116,11 @@ namespace Automobile.Mobile.Framework.Device
                                 switch (urlCommand.Mode)
                                 {
                                     case CommandMode.Get:
-                                        response = new CommandResponse<string>(true, Browser.Url);
+                                        response = message.CreateResponse(Browser.Url);
                                         break;
                                     case CommandMode.Set:
                                         Browser.Navigate(urlCommand.Url);
-                                        response = new Response(true);
+                                        response = message.CreateResponse(true);
                                         break;
                                     case CommandMode.Invoke:
                                         throw new InvalidEnumArgumentException(
@@ -130,18 +130,18 @@ namespace Automobile.Mobile.Framework.Device
                                 }
                                 break;
                             case CommandType.Screenshot:
-                                response = new CommandResponse<byte[]>(true, TakeScreenshot());
+                                response = message.CreateResponse(TakeScreenshot());
                                 break;
                             case CommandType.Orientation:
                                 var orientationCommand = message as OrientationCommand;
                                 switch (orientationCommand.Mode)
                                 {
                                     case CommandMode.Get:
-                                        response = new CommandResponse<Orientation>(true, Orientation);
+                                        response = message.CreateResponse(Orientation);
                                         break;
                                     case CommandMode.Set:
                                         Orientation = orientationCommand.Orientation;
-                                        response = new Response(true);
+                                        response = message.CreateResponse(true);
                                         break;
                                     case CommandMode.Invoke:
                                         throw new InvalidEnumArgumentException(
@@ -152,17 +152,17 @@ namespace Automobile.Mobile.Framework.Device
                                 break;
                             case CommandType.Disconnect:
                                 Browser.Navigate("about:blank", false);
-                                _communicator.SendResponse(new Response(true));
+                                _communicator.SendResponse(message.CreateResponse(true));
                                 _communicator.Close();
                                 MobileDb.Instance.SetAvailibility(DeviceInfo, true);
                                 continue;
                             case CommandType.WaitForReady:
                                 Browser.WaitForReady();
-                                response = new Response(true);
+                                response = message.CreateResponse(true);
                                 break;
                             case CommandType.Refresh:
                                 Browser.Refresh();
-                                response = new Response(true);
+                                response = message.CreateResponse(true);;
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
@@ -170,7 +170,7 @@ namespace Automobile.Mobile.Framework.Device
                     }
                     catch(Exception e)
                     {
-                        response = new CommandResponse<Exception>(false, e);
+                        response = message.CreateResponse(e);
                     }
                     
 

@@ -13,28 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Response.cs 
+IMessage.cs 
 */
-using System;
-
 namespace Automobile.Communication.Messaging
 {
-    [Serializable]
-    public class Response : IResponse
+    public interface IMessage : IMessageInfo
     {
-        public Response(Guid guid)
-        {
-            Guid = guid;
-            Timestamp = DateTime.Now;
-        }
-
-        public Response(Guid guid, bool success) : this(guid)
-        {
-            Success = success;
-        }
-
-        public Guid Guid { get; private set; }
-        public DateTime Timestamp { get; set; }
-        public bool Success { get; set; }
+        IResponse CreateResponse();
+        IResponse CreateResponse(bool success);
     }
 }

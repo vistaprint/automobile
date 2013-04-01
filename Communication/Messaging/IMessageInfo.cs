@@ -16,7 +16,6 @@ limitations under the License.
 IMessageInfo.cs 
 */
 using System;
-using System.Net;
 
 namespace Automobile.Communication.Messaging
 {
@@ -25,6 +24,7 @@ namespace Automobile.Communication.Messaging
     /// </summary>
     public interface IMessageInfo
     {
+        Guid Guid { get; }
         DateTime Timestamp { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Automobile.Mobile.Framework.Commands
     /// Basic command
     /// </summary>
     [Serializable]
-    public abstract class Command : IMessageInfo
+    public abstract class Command : Message
     {
         /// <summary>
         /// Type of the command
@@ -35,10 +35,10 @@ namespace Automobile.Mobile.Framework.Commands
         /// Mode of the command
         /// </summary>
         public virtual CommandMode Mode { get; set; }
-        
-        /// <summary>
-        /// Timestamp, set by the communicator
-        /// </summary>
-        public DateTime Timestamp { get; set; }
+
+        public CommandResponse<T> CreateResponse<T>(T contents)
+        {
+            return new CommandResponse<T>(true, Guid, contents);
+        }
     }
 }

@@ -15,10 +15,31 @@ limitations under the License.
 
 ISimpleMessage.cs 
 */
+
+using System;
+
 namespace Automobile.Communication.Messaging
 {
-    public interface ISimpleMessage<TPayload> : IMessageInfo, IPayload<TPayload>
+    [Serializable]
+    public class Message : IMessage
     {
-         
+        public Message()
+        {
+            Guid = Guid.NewGuid();
+            Timestamp = DateTime.Now;
+        }
+
+        public Guid Guid { get; private set; }
+        public DateTime Timestamp { get; set; }
+
+        public virtual IResponse CreateResponse()
+        {
+            return CreateResponse(true);
+        }
+
+        public virtual IResponse CreateResponse(bool success)
+        {
+            return new Response(Guid, success);
+        }
     }
 }

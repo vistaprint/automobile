@@ -15,21 +15,19 @@ limitations under the License.
 
 GenericMessage.cs 
 */
+
 using System;
 
 namespace Automobile.Communication.Messaging
 {
     [Serializable]
-    public class GenericMessage<T> : ISimpleMessage<T>
+    public class GenericMessage<T> : Message, IPayload<T>
     {
-        public GenericMessage() {}
-
-        public GenericMessage(T contents )
+        public GenericMessage(T contents)
         {
             Contents = contents;
         }
 
-        public DateTime Timestamp { get; set; }
         public T Contents { get; set; }
     }
 }

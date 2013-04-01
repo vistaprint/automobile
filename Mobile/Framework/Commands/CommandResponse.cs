@@ -28,7 +28,7 @@ namespace Automobile.Mobile.Framework.Commands
     public class CommandResponse<TContents> : Response, IPayload<TContents>
     {
         
-        public CommandResponse(bool success, TContents contents) : base(success)
+        public CommandResponse(bool success, Guid guid, TContents contents) : base(guid, success)
         {
             Contents = contents;
         }
