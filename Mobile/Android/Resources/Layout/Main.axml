@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:keepScreenOn="true"
     android:id="@+id/MainView">
     <RadioGroup
         android:minWidth="25px"
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/ConnectionStringTextView"
             android:hint="Server Info"
-            android:inputType="textUri|textNoSuggestions"/>
+            android:inputType="textUri|textNoSuggestions" />
     </LinearLayout>
     <Button
         android:id="@+id/StartAutomation"

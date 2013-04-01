@@ -35,6 +35,7 @@ namespace Automobile.Mobile.Android.Automation
         private Thread _autoThread;
         private string _connTypeKey;
         private string _connStringKey;
+        private PowerManager.WakeLock _wakeLock;
 
         /// <summary>
         /// Executed when activity is started
@@ -64,6 +65,15 @@ namespace Automobile.Mobile.Android.Automation
             _autoThread = new Thread(_device.BeginAutomation);
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+            // Keep screen awake
+            var powerManager = (PowerManager)GetSystemService(PowerService);
+            _wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "no sleep");
+            _wakeLock.Acquire();
+        }
+
         /// <summary>
         /// Executed when activity is on the screen and active
         /// </summary>
@@ -71,7 +81,16 @@ namespace Automobile.Mobile.Android.Automation
         {
             base.OnResume();
             // Start automation
-            _autoThread.Start();
+            if(_autoThread.ThreadState != ThreadState.Running)
+            {
+                _autoThread.Start();
+            }        
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            _wakeLock.Release();
         }
     }
 }
