@@ -16,6 +16,7 @@ limitations under the License.
 AndroidBrowser.cs 
 */
 using System;
+using System.Threading;
 using Android.Webkit;
 using Automobile.Mobile.Framework.Browser;
 
@@ -88,6 +89,9 @@ namespace Automobile.Mobile.Android.Automation
         {
             try
             {
+                // There seems to be a short time between when an an action (ie. click a link) occurs and the loading begins.
+                // This gives things a chance to catch up.
+                Thread.Sleep(1500); 
                 Client.LoadTrigger.WaitOne(10000);
             }
             catch (TimeoutException)
