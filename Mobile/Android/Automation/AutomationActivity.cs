@@ -22,6 +22,7 @@ using Android.Content.PM;
 using Android.OS;
 using Automobile.Mobile.Android.Config;
 using Automobile.Mobile.Framework;
+using Automobile.Mobile.Framework.Data;
 
 namespace Automobile.Mobile.Android.Automation
 {
@@ -90,7 +91,10 @@ namespace Automobile.Mobile.Android.Automation
         protected override void OnStop()
         {
             base.OnStop();
+            // This app can't do it's job in the background. Clean up and kill the activity.
             _wakeLock.Release();
+            MobileDb.Instance.SetAvailibility(_device.DeviceInfo, false);
+            Finish();
         }
     }
 }
