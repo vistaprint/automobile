@@ -42,6 +42,7 @@ namespace Automobile.Mobile.Framework.Data
             conn.Open();
             var sql = new SqlCommand(string.Format("exec mob_update_device_registration '{0}', '{1}', '{2}', '{3}'", device.UniqueId, device.MobileOs, device.OsVersion, device.IP), conn);
             sql.ExecuteNonQuery();
+            conn.Close();
         }
 
         public DeviceInfo GetFirstMatch(DeviceInfo device)
@@ -51,6 +52,7 @@ namespace Automobile.Mobile.Framework.Data
 
         public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
         {
+            DeviceInfo match = null;
             var conn = new SqlConnection(_connectionString);
             conn.Open();
             var sql = new SqlCommand(string.Format("exec mob_get_first_match @ID, @OS, @VERSION, @IP, @AVAILIBLE"), conn);
@@ -64,7 +66,7 @@ namespace Automobile.Mobile.Framework.Data
             if(reader.HasRows)
             {
                 reader.Read();
-                return new DeviceInfo
+                match = new DeviceInfo
                 {
                     UniqueId = (string)reader["device_id"],
                     MobileOs = (MobileOs)Enum.Parse(typeof(MobileOs), (string)reader["mobile_os"]),
@@ -73,7 +75,8 @@ namespace Automobile.Mobile.Framework.Data
                 }; 
             }
 
-            return null;
+            conn.Close();
+            return match;
         }
 
         public void SetAvailibility(DeviceInfo device, bool availible)
@@ -82,6 +85,7 @@ namespace Automobile.Mobile.Framework.Data
             conn.Open();
             var sql = new SqlCommand(string.Format("exec mob_set_availibility '{0}', {1}", device.UniqueId, availible ? 1 : 0), conn);
             sql.ExecuteNonQuery();
+            conn.Close();
         }
     }
 }
