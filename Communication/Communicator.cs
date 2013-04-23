@@ -141,9 +141,12 @@ namespace Automobile.Communication
         /// </summary>
         public virtual void Close()
         {
-            Stream.Flush();
-            Stream.Close();
-            Stream = null;
+            if(Stream != null)
+            {
+                Stream.Flush();
+                Stream.Close();
+                Stream = null;
+            }
         }
 
         /// <summary>

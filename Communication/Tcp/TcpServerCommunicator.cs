@@ -106,6 +106,8 @@ namespace Automobile.Communication.Tcp
             {
                 _thread.Abort();
             }
+            Listener.Stop();
+
             base.Close();
         }
 

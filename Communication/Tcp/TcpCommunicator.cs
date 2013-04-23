@@ -73,8 +73,11 @@ namespace Automobile.Communication.Tcp
         public override void Close()
         {
             base.Close();
-            Client.Close();
-            Client = null;
+            if(Client != null)
+            {
+                Client.Close();
+                Client = null;
+            }
         }
     }
 }
