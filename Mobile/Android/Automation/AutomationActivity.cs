@@ -93,7 +93,8 @@ namespace Automobile.Mobile.Android.Automation
             base.OnStop();
             // This app can't do it's job in the background. Clean up and kill the activity.
             _wakeLock.Release();
-            MobileDb.Instance.SetAvailibility(_device.DeviceInfo, false);
+            _autoThread.Abort();
+            _autoThread.Join();
             Finish();
         }
     }

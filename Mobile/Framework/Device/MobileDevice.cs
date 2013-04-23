@@ -18,6 +18,7 @@ LocalDevice.cs
 
 using System;
 using System.ComponentModel;
+using System.Threading;
 using Automobile.Communication;
 using Automobile.Communication.Messaging;
 using Automobile.Communication.Tcp;
@@ -33,7 +34,7 @@ namespace Automobile.Mobile.Framework.Device
     /// </summary>
     public abstract class MobileDevice : IMobileDevice
     {
-        private TcpCommunicator _communicator;
+        private TcpServerCommunicator _communicator;
 
         // TODO: make configable
         private const int TCP_PORT = 4242;
@@ -83,100 +84,126 @@ namespace Automobile.Mobile.Framework.Device
         /// <returns>Array of bytes representing the image</returns>
         public abstract byte[] TakeScreenshot();
         
-        // TODO: Too long/messy, needs refactoring
         /// <summary>
         /// Begin the main automation loop, accepting connections and executing commands
         /// </summary>
         public virtual void BeginAutomation()
         {
-            _communicator = new TcpServerCommunicator(TCP_PORT);
-
-            MobileDb.Instance.Register(DeviceInfo);
-
-            while (true)
+            try
             {
-                _communicator.Initialize();
-                MobileDb.Instance.SetAvailibility(DeviceInfo, false);
+                _communicator = new TcpServerCommunicator(TCP_PORT);
+                MobileDb.Instance.Register(DeviceInfo);
 
-                while (_communicator.Connected)
+                while (true)
                 {
-                    IResponse response;
-                    var message = _communicator.WaitForMessage<Command>();
-                    try
-                    {
-                        switch (message.CommandType)
-                        {
-                            case CommandType.ExecJavascript:
-                                var jsCommand = message as ExecJavascriptCommand;
-                                response = message.CreateResponse(Browser.ExecJavascript(jsCommand.Javascript));
-                                break;
-                            case CommandType.Url:
-                                var urlCommand = message as UrlCommand;
-
-                                switch (urlCommand.Mode)
-                                {
-                                    case CommandMode.Get:
-                                        response = message.CreateResponse(Browser.Url);
-                                        break;
-                                    case CommandMode.Set:
-                                        Browser.Navigate(urlCommand.Url);
-                                        response = message.CreateResponse(true);
-                                        break;
-                                    case CommandMode.Invoke:
-                                        throw new InvalidEnumArgumentException(
-                                            "Cannot Invoke the URL CommandType");
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                                break;
-                            case CommandType.Screenshot:
-                                response = message.CreateResponse(TakeScreenshot());
-                                break;
-                            case CommandType.Orientation:
-                                var orientationCommand = message as OrientationCommand;
-                                switch (orientationCommand.Mode)
-                                {
-                                    case CommandMode.Get:
-                                        response = message.CreateResponse(Orientation);
-                                        break;
-                                    case CommandMode.Set:
-                                        Orientation = orientationCommand.Orientation;
-                                        response = message.CreateResponse(true);
-                                        break;
-                                    case CommandMode.Invoke:
-                                        throw new InvalidEnumArgumentException(
-                                            "Cannot Invoke the Orientation CommandType");
-                                    default:
-                                        throw new ArgumentOutOfRangeException();
-                                }
-                                break;
-                            case CommandType.Disconnect:
-                                Browser.Navigate("about:blank", false);
-                                _communicator.SendResponse(message.CreateResponse(true));
-                                _communicator.Close();
-                                MobileDb.Instance.SetAvailibility(DeviceInfo, true);
-                                continue;
-                            case CommandType.WaitForReady:
-                                Browser.WaitForReady();
-                                response = message.CreateResponse(true);
-                                break;
-                            case CommandType.Refresh:
-                                Browser.Refresh();
-                                response = message.CreateResponse(true);;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    catch(Exception e)
-                    {
-                        response = message.CreateResponse(e);
-                    }
-                    
-
-                    _communicator.SendResponse(response);
+                    _communicator.Initialize();
+                    MobileDb.Instance.SetAvailibility(DeviceInfo, false);
+                    // Returns when the connection has been closed
+                    HandleConnection();
+                    MobileDb.Instance.SetAvailibility(DeviceInfo, true);
                 }
             }
+            catch (ThreadAbortException)
+            {
+                // App is shutting down, clean up
+                _communicator.Close();
+                MobileDb.Instance.SetAvailibility(DeviceInfo, false);
+            }
+        }
+
+        /// <summary>
+        /// Handles a connection, returns when the connection is closed
+        /// </summary>
+        private void HandleConnection()
+        {
+            while (_communicator.Connected)
+            {
+                IResponse response;
+                var message = _communicator.WaitForMessage<Command>();
+                try
+                {
+                    response = HandleMessage(message);
+                }
+                catch (Exception e)
+                {
+                    response = message.CreateResponse(e);
+                }
+
+
+                _communicator.SendResponse(response);
+            }
+        }
+
+
+        /// <summary>
+        /// Handles a message from a client
+        /// </summary>
+        /// <param name="message">Message to handle</param>
+        /// <returns>Appropriate response for the given message</returns>
+        private IResponse HandleMessage(Command message)
+        {
+            IResponse response;
+            switch (message.CommandType)
+            {
+                case CommandType.ExecJavascript:
+                    var jsCommand = message as ExecJavascriptCommand;
+                    response = message.CreateResponse(Browser.ExecJavascript(jsCommand.Javascript));
+                    break;
+                case CommandType.Url:
+                    var urlCommand = message as UrlCommand;
+
+                    switch (urlCommand.Mode)
+                    {
+                        case CommandMode.Get:
+                            response = message.CreateResponse(Browser.Url);
+                            break;
+                        case CommandMode.Set:
+                            Browser.Navigate(urlCommand.Url);
+                            response = message.CreateResponse(true);
+                            break;
+                        case CommandMode.Invoke:
+                            throw new InvalidEnumArgumentException("Cannot Invoke the URL CommandType");
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    break;
+                case CommandType.Screenshot:
+                    response = message.CreateResponse(TakeScreenshot());
+                    break;
+                case CommandType.Orientation:
+                    var orientationCommand = message as OrientationCommand;
+                    switch (orientationCommand.Mode)
+                    {
+                        case CommandMode.Get:
+                            response = message.CreateResponse(Orientation);
+                            break;
+                        case CommandMode.Set:
+                            Orientation = orientationCommand.Orientation;
+                            response = message.CreateResponse(true);
+                            break;
+                        case CommandMode.Invoke:
+                            throw new InvalidEnumArgumentException("Cannot Invoke the Orientation CommandType");
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    break;
+                case CommandType.Disconnect:
+                    Browser.Navigate("about:blank", false);
+                    _communicator.SendResponse(message.CreateResponse(true));
+                    _communicator.Close();
+                    return response;
+                case CommandType.WaitForReady:
+                    Browser.WaitForReady();
+                    response = message.CreateResponse(true);
+                    break;
+                case CommandType.Refresh:
+                    Browser.Refresh();
+                    response = message.CreateResponse(true);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return response;
         }
     }
 }
