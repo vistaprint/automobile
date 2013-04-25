@@ -60,7 +60,6 @@ namespace Automobile.Mobile.Framework.Device
                     MobileDb.CreateUdpClient(connectionString, UDP_PORT);
                     break;
             }
-
         }
 
         /// <summary>
@@ -128,9 +127,12 @@ namespace Automobile.Mobile.Framework.Device
                 {
                     response = message.CreateResponse(e);
                 }
+                
+                if(response != null)
+                {
+                    _communicator.SendResponse(response);
+                }
 
-
-                _communicator.SendResponse(response);
             }
         }
 
@@ -191,7 +193,7 @@ namespace Automobile.Mobile.Framework.Device
                     Browser.Navigate("about:blank", false);
                     _communicator.SendResponse(message.CreateResponse(true));
                     _communicator.Close();
-                    return response;
+                    return null;
                 case CommandType.WaitForReady:
                     Browser.WaitForReady();
                     response = message.CreateResponse(true);
