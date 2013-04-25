@@ -16,6 +16,7 @@ limitations under the License.
 iOSBrowser.cs 
 */
 using System;
+using System.Threading;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Automobile.Mobile.Framework.Browser;
@@ -136,7 +137,16 @@ namespace Automobile.Mobile.iOS.Automation
 		/// </summary>
         public override void WaitForReady()
 		{
-			Client.LoadTrigger.WaitOne();
+			try
+			{
+				Thread.Sleep(1500);
+				Client.LoadTrigger.WaitOne(10000);
+			}
+			catch(TimeoutException)
+			{
+				throw new TimeoutException("Timed out waiting for browser to be ready");
+			}
+
 		}
 		
 
