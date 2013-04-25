@@ -37,7 +37,7 @@ namespace Automobile.Communication
     public abstract class Communicator
     {
 
-        private const int DEFAULT_TIMEOUT = 15000;
+        private const int DEFAULT_TIMEOUT = 2 * 60 * 1000;
 
         /// <summary>
         /// A Communicator
@@ -133,7 +133,7 @@ namespace Automobile.Communication
         /// <returns>Recieved message</returns>
         public TMessage WaitForMessage<TMessage>()
         {
-            return (TMessage) Read();
+            return (TMessage) Read(true, 0);
         }
 
         /// <summary>
@@ -153,6 +153,7 @@ namespace Automobile.Communication
         /// Read a object from the stream
         /// </summary>
         /// <param name="blocking">If true, blocks while the stream is empty</param>
+        /// <param name="timeout">Maxium time to wait for data, 0 waits forever </param>
         /// <returns>Object read from stream</returns>
         private object Read(bool blocking = true, int timeout = DEFAULT_TIMEOUT)
         {
@@ -161,9 +162,9 @@ namespace Automobile.Communication
             {
                 Thread.Sleep(50);
                 i += 50;
-                if(i > timeout)
+                if(timeout != 0 && i > timeout)
                 {
-                    //throw new TimeoutException("Timed out waiting for data from the stream");
+                    throw new TimeoutException("Timed out waiting for data from the stream");
                 }
             }
 
