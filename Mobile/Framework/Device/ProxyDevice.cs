@@ -15,7 +15,6 @@ limitations under the License.
 
 RemoteDevice.cs 
 */
-using System;
 using Automobile.Communication.Messaging;
 using Automobile.Communication.Tcp;
 using Automobile.Mobile.Framework.Browser;

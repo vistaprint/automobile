@@ -37,7 +37,7 @@ namespace Automobile.Communication
     public abstract class Communicator
     {
 
-        private const int DEFAULT_TIMEOUT = 2 * 60 * 1000;
+        private const int DEFAULT_TIMEOUT = 3 * 60 * 1000;
 
         /// <summary>
         /// A Communicator
@@ -133,7 +133,7 @@ namespace Automobile.Communication
         /// <returns>Recieved message</returns>
         public TMessage WaitForMessage<TMessage>()
         {
-            return (TMessage) Read(true, 0);
+            return (TMessage) Read(true, 10 * 60 * 1000);
         }
 
         /// <summary>

@@ -22,7 +22,6 @@ using Android.Content.PM;
 using Android.OS;
 using Automobile.Mobile.Android.Config;
 using Automobile.Mobile.Framework;
-using Automobile.Mobile.Framework.Data;
 
 namespace Automobile.Mobile.Android.Automation
 {

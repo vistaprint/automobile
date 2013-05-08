@@ -19,7 +19,6 @@ LocalDevice.cs
 using System;
 using System.ComponentModel;
 using System.Threading;
-using Automobile.Communication;
 using Automobile.Communication.Messaging;
 using Automobile.Communication.Tcp;
 using Automobile.Mobile.Framework.Browser;
@@ -118,10 +117,29 @@ namespace Automobile.Mobile.Framework.Device
             while (_communicator.Connected)
             {
                 IResponse response;
-                var message = _communicator.WaitForMessage<Command>();
+                Command message;
+
+                // Get a command
+                try
+                {
+                    message = _communicator.WaitForMessage<Command>();
+                }
+                catch(TimeoutException)
+                {
+                    // Timed out waiting for a message
+                    Browser.Navigate("about:blank", false);
+                    _communicator.Close();
+                    return;
+                }
+
+                // Handle the command
                 try
                 {
                     response = HandleMessage(message);
+                }
+                catch (ThreadAbortException)
+                {
+                    throw; // Shutting down
                 }
                 catch (Exception e)
                 {

@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Automobile.Mobile.Framework.Device;
-
 namespace Automobile.Mobile.Framework.Data
 {
     public class NullClient : IMobileDb

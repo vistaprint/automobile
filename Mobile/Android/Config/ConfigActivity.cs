@@ -15,7 +15,6 @@ limitations under the License.
 
 ConfigActivity.cs 
 */
-using System;
 using Android.App;
 using Android.Content;
 using Android.OS;

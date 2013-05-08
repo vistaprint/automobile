@@ -16,7 +16,6 @@ limitations under the License.
 UdpClient.cs 
 */
 using System.Net;
-using Automobile.Mobile.Framework.Device;
 using System.Timers;
 using System.Text;
 using System;

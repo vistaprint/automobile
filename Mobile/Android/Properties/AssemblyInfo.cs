@@ -16,7 +16,6 @@ limitations under the License.
 AssemblyInfo.cs 
 */
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 
