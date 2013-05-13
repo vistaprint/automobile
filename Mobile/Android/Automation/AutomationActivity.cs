@@ -19,6 +19,8 @@ using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Net;
+using Android.Net.Wifi;
 using Android.OS;
 using Automobile.Mobile.Android.Config;
 using Automobile.Mobile.Framework;
@@ -36,6 +38,7 @@ namespace Automobile.Mobile.Android.Automation
         private string _connTypeKey;
         private string _connStringKey;
         private PowerManager.WakeLock _wakeLock;
+        private WifiManager.WifiLock _wifiLock;
 
         /// <summary>
         /// Executed when activity is started
@@ -68,10 +71,13 @@ namespace Automobile.Mobile.Android.Automation
         protected override void OnStart()
         {
             base.OnStart();
-            // Keep screen awake
+            // Keep screen and wifi awake
             var powerManager = (PowerManager)GetSystemService(PowerService);
+            var wifiManager = (WifiManager)GetSystemService(WifiService);
             _wakeLock = powerManager.NewWakeLock(WakeLockFlags.Full, "no sleep");
             _wakeLock.Acquire();
+            _wifiLock = wifiManager.CreateWifiLock(WifiMode.FullHighPerf, "wifi on");
+            _wifiLock.Acquire();
         }
 
         /// <summary>
@@ -91,11 +97,14 @@ namespace Automobile.Mobile.Android.Automation
         {
             base.OnStop();
             // This app can't do it's job in the background. Clean up and kill the activity.
+            // Release locks
             _wakeLock.Release();
+            _wifiLock.Release();
+            // Stop the automation thread
             _autoThread.Abort();
             _autoThread.Join();
+            // Kill the activity
             Finish();
         }
     }
 }
-
