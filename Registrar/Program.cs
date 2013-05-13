@@ -15,6 +15,8 @@ limitations under the License.
 
 Program.cs 
 */
+using System.Threading;
+
 namespace Automobile.Registrar
 {
     class Program
@@ -22,8 +24,7 @@ namespace Automobile.Registrar
         static void Main(string[] args)
         {
             var server = new RegistrarServer("http://localhost:8080", "MobileDB.sqlite");
-
-            while(true) {}
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }
