@@ -118,23 +118,32 @@ namespace Automobile.Registrar
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 
             SQLiteCommand deviceInfo = new SQLiteCommand(db);
-            deviceInfo.CommandText = string.Format("SELECT MobileOs, DeviceModel, OsVersion, UniqueId, IP FROM DeviceInfo WHERE MobileOs = '{0}'", device.MobileOs);
+            deviceInfo.CommandText ="SELECT MobileOs, DeviceModel, OsVersion, UniqueId, IP FROM DeviceInfo WHERE";
+            bool first = true;
 
+            if(device.MobileOs != null)
+            {
+                deviceInfo.CommandText += string.Format(" MobileOs = '{0}'", device.MobileOs);
+                first = false;
+            }
             if(device.DeviceModel != null)
             {
-                deviceInfo.CommandText += string.Format(" AND DeviceModel = '{0}'", device.DeviceModel);
+                deviceInfo.CommandText += string.Format("{0} DeviceModel = '{1}'", first ? "" : " AND", device.DeviceModel);
+                first = false;
             }
             if(device.OsVersion != null)
             {
-                deviceInfo.CommandText += string.Format(" AND OsVersion = '{0}'", device.OsVersion);
+                deviceInfo.CommandText += string.Format("{0} OsVersion = '{1}'", first ? "" : " AND", device.OsVersion);
+                first = false;
             }
             if (device.UniqueId != null)
             {
-                deviceInfo.CommandText += string.Format(" AND UniqueId = '{0}'", device.UniqueId);
+                deviceInfo.CommandText += string.Format("{0} UniqueId = '{1}'", first ? "" : " AND", device.UniqueId);
+                first = false;
             }
             if(filterByAvailible)
             {
-                deviceInfo.CommandText += " AND Availible = 1";
+                deviceInfo.CommandText += string.Format("{0} Availible = 1", first ? "" : " AND");
             }
             deviceInfo.CommandText += " limit 1";
 
