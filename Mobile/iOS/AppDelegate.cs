@@ -41,6 +41,9 @@ namespace Automobile.Mobile.iOS
 		//
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
+			// Prevent screen lock
+			app.IdleTimerDisabled = true;
+
 			// Load settings
 			var conn = NSUserDefaults.StandardUserDefaults.StringForKey("connType");
 			var connType = conn == null ? ConnectionType.Registrar : (ConnectionType) Enum.Parse(typeof(ConnectionType), conn);
