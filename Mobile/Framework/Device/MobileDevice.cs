@@ -56,7 +56,7 @@ namespace Automobile.Mobile.Framework.Device
                     MobileDb.CreateRegistrarClient(connectionString, json);
                     break;
                 case ConnectionType.UdpBroadcast:
-                    MobileDb.CreateUdpClient(connectionString, UDP_PORT);
+                    MobileDb.CreateUdpClient(connectionString, UDP_PORT, json);
                     break;
             }
         }

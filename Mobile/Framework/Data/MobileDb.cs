@@ -19,9 +19,9 @@ namespace Automobile.Mobile.Framework.Data
 {
     public static class MobileDb
     {
-        public static void CreateUdpClient(string multicastIp, int port)
+        public static void CreateUdpClient(string multicastIp, int port, IJsonProvider json)
         {
-            Instance = new UdpClient(multicastIp, port);
+            Instance = new UdpClient(multicastIp, port, json);
         }
 
         public static void CreateSqlClient(string connectionString)

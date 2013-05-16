@@ -27,24 +27,28 @@ namespace Automobile.Mobile.Framework.Data
         private System.Net.Sockets.UdpClient _udpClient;
         private IPEndPoint _endPoint;
         private Timer _timer;
-        private const string DEVICE_STRING = "MobileOS:{0},DeviceModel:{1},OsVersion:{2},UniqueId:{3},IP:{4}";
+        private const string DEVICE_STRING = "MobileOS:{0},OsVersion:{1},UniqueId:{2},IP:{3}";
         private DeviceInfo _currentInfo;
+        private IJsonProvider _json;
 
-        public UdpClient(string multicastIp, int port)
+        public UdpClient(string multicastIp, int port, IJsonProvider json)
         {
             var ip = IPAddress.Parse(multicastIp);
-            _udpClient = new System.Net.Sockets.UdpClient();
-            _udpClient.JoinMulticastGroup(ip);
             _endPoint = new IPEndPoint(ip, port);
+            _udpClient = new System.Net.Sockets.UdpClient(port);
+            _udpClient.JoinMulticastGroup(ip);
 
             _timer = new Timer(30 * 1000); // 30 seconds
             _timer.AutoReset = true;
             _timer.Elapsed += Broadcast;
+
+            _json = json;
         }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            _udpClient.DropMulticastGroup(_endPoint.Address);
+            _udpClient.Close();
         }
 
         public void Register(DeviceInfo info)
@@ -55,19 +59,52 @@ namespace Automobile.Mobile.Framework.Data
 
         public DeviceInfo GetFirstMatch(DeviceInfo info)
         {
-            throw new System.NotImplementedException();
+            return GetFirstMatch(info, true);
         }
 
         public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
         {
-            throw new NotImplementedException();
+            if (!filterByAvailible)
+            {
+                throw new Exception("Unavailible devices cannot be searched with the UdpClient.");
+            }
+
+            var time = DateTime.Now;
+
+            while (DateTime.Now - time < TimeSpan.FromSeconds(45))
+            {
+                var async = _udpClient.BeginReceive(null, null);
+
+                if (async.AsyncWaitHandle.WaitOne())
+                {
+                    IPEndPoint remoteEp = null;
+                    var bytes = _udpClient.EndReceive(async, ref remoteEp);
+                    var encoding = new ASCIIEncoding();
+                    var found = _json.Deserialize<DeviceInfo>(encoding.GetString(bytes));
+                    if (IsMatch(device, found))
+                    {
+                        return found;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public void SetAvailibility(DeviceInfo device, bool availible)
         {
+            if (_currentInfo == null)
+            {
+                throw new Exception("Cannot set availibility: No device registered with this UdpClient instance.");
+            }
+
+            if (_currentInfo != device)
+            {
+                throw new Exception("Cannot set availibility: Device does not match registered device; register a new device before setting availibility.");
+            }
+
             if (availible && !_timer.Enabled)
             {
-                _currentInfo = device;
                 BeginBroadcast();
             }
             else if (!availible)
@@ -76,26 +113,27 @@ namespace Automobile.Mobile.Framework.Data
             }
         }
 
-        // Untested
+        private bool IsMatch(DeviceInfo orignal, DeviceInfo match)
+        {
+            return (orignal.MobileOs == null || orignal.MobileOs == match.MobileOs) &&
+                    (orignal.OsVersion == null || orignal.OsVersion == match.OsVersion) &&
+                    (orignal.UniqueId == null || orignal.UniqueId == match.UniqueId);
+        }
+
         private void BeginBroadcast()
         {
             Broadcast(null, null);
             _timer.Start();
         }
 
-        // Untested
         private void Broadcast(object sender, ElapsedEventArgs args)
         {
-            var device = string.Format(DEVICE_STRING, _currentInfo.MobileOs, _currentInfo.OsVersion,
-                                       _currentInfo.UniqueId, _currentInfo.IP);
+            var device = _json.Serialize(_currentInfo);
             var encoding = new ASCIIEncoding();
             Byte[] bytes = encoding.GetBytes(device);
-            Byte[] len = BitConverter.GetBytes(bytes.Length);
-            _udpClient.Send(len, 4, _endPoint);
             _udpClient.Send(bytes, bytes.Length, _endPoint);
         }
 
-        // Untested
         private void EndBroadcast()
         {
             _timer.Stop();

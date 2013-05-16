@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Automobile.Mobile.Framework.UnitTests</RootNamespace>
     <AssemblyName>Automobile.Mobile.Framework.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -46,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceCommTests.cs" />
+    <Compile Include="Helpers\JsonProvider.cs" />
     <Compile Include="Helpers\LocalDeviceDummy.cs" />
     <Compile Include="Helpers\MobileBrowserDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlClientTests.cs" />
+    <Compile Include="UdpClientTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Automobile.Mobile.Framework.csproj">
