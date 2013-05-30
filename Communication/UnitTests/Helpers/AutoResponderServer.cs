@@ -22,8 +22,8 @@ namespace Automobile.Communication.UnitTests.Helpers
                 Initialize();
                 while(true)
                 {
-                    var msg = WaitForMessage<IMessageInfo>();
-                    SendResponse(new Response(true));
+                    var msg = WaitForMessage<Message>();
+                    SendResponse(msg.CreateResponse(true));
                 }
             }
             catch (ThreadAbortException)

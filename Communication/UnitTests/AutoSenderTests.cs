@@ -27,11 +27,11 @@ namespace Automobile.Communication.UnitTests
         [Test]
         public void ResponseTest()
         {
-            var comm = new TcpClientCommunicator("127.0.0.1", 3000);
+            var comm = new TcpClientCommunicator("127.0.0.1", 3001);
             comm.Initialize();
             var msg = comm.WaitForMessage<GenericMessage<string>>();
             Assert.AreEqual(MSG, msg.Contents);
-            comm.SendResponse(new Response(true));
+            comm.SendResponse(msg.CreateResponse(true));
             Thread.Sleep(100);
             Assert.IsTrue(Auto.RecivedResponse);
         }
