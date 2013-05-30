@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: Android.Runtime.ResourceDesignerAttribute("Automobile.Mobile.Android.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("Automobile.Mobile.Android.Resource", IsApplication=true)]
 
 namespace Automobile.Mobile.Android
 {
@@ -19,9 +19,9 @@ namespace Automobile.Mobile.Android
 	public partial class Resource
 	{
 		
-		Resource()
+		static Resource()
 		{
-			global::Android.Runtime.ResourceIdManager.UpdateIdValues ();
+			global::Android.Runtime.ResourceIdManager.UpdateIdValues();
 		}
 		
 		public static void UpdateIdValues()
@@ -30,6 +30,11 @@ namespace Automobile.Mobile.Android
 		
 		public partial class Attribute
 		{
+			
+			static Attribute()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
 			
 			private Attribute()
 			{
@@ -41,6 +46,11 @@ namespace Automobile.Mobile.Android
 			
 			// aapt resource value: 0x7f020000
 			public const int phone_icon = 2130837504;
+			
+			static Drawable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
 			
 			private Drawable()
 			{
@@ -77,6 +87,11 @@ namespace Automobile.Mobile.Android
 			// aapt resource value: 0x7f050002
 			public const int textView1 = 2131034114;
 			
+			static Id()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
 			private Id()
 			{
 			}
@@ -87,6 +102,11 @@ namespace Automobile.Mobile.Android
 			
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
+			
+			static Layout()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
 			
 			private Layout()
 			{
@@ -101,6 +121,11 @@ namespace Automobile.Mobile.Android
 			
 			// aapt resource value: 0x7f040000
 			public const int ConnectionType = 2130968576;
+			
+			static String()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
 			
 			private String()
 			{
