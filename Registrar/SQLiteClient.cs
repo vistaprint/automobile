@@ -19,7 +19,6 @@ using System;
 using System.Data.SQLite;
 using Automobile.Mobile.Framework;
 using Automobile.Mobile.Framework.Data;
-using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Registrar
 {
@@ -46,16 +45,19 @@ namespace Automobile.Registrar
             var db = new SQLiteConnection(_dbName);
             db.Open();
 
-            SQLiteCommand createTable = new SQLiteCommand("create table if not exists DeviceInfo ( MobileOs text, DeviceModel text, OsVersion text, UniqueId text, IP text, LastSeen text, Availible int, UNIQUE(UniqueId))", db);
-            createTable.ExecuteNonQuery();
+            using(SQLiteCommand createTable = new SQLiteCommand("create table if not exists DeviceInfo ( MobileOs text, DeviceModel text, OsVersion text, UniqueId text, IP text, LastSeen text, Availible int, UNIQUE(UniqueId))", db))
+            {
+                createTable.ExecuteNonQuery();
+            }
 
-            if(shared)
+            if (shared)
             {
                 _sharedDb = db;
             }
             else
             {
                 db.Close();
+                GC.Collect();
             }
         }
 
@@ -74,16 +76,19 @@ namespace Automobile.Registrar
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 
-            SQLiteCommand deviceInfo = new SQLiteCommand(db);
-            deviceInfo.CommandText =
-                string.Format(
-                    "REPLACE INTO DeviceInfo (MobileOs, DeviceModel, OsVersion, UniqueId, IP, LastSeen, Availible) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', datetime('now'), 1)",
-                    info.MobileOs, info.DeviceModel, info.OsVersion, info.UniqueId, info.IP);
-            deviceInfo.ExecuteNonQuery();
+            using (SQLiteCommand deviceInfo = new SQLiteCommand(db))
+            {
+                deviceInfo.CommandText =
+                    string.Format(
+                        "REPLACE INTO DeviceInfo (MobileOs, DeviceModel, OsVersion, UniqueId, IP, LastSeen, Availible) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', datetime('now'), 1)",
+                        info.MobileOs, info.DeviceModel, info.OsVersion, info.UniqueId, info.IP);
+                deviceInfo.ExecuteNonQuery();
+            }
 
             if (_sharedDb == null)
             {
                 db.Close();
+                GC.Collect();
             }
         }
 
@@ -91,13 +96,16 @@ namespace Automobile.Registrar
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
 
-            SQLiteCommand availUpdate = new SQLiteCommand(db);
-            availUpdate.CommandText = string.Format("UPDATE DeviceInfo SET Availible = {0} WHERE UniqueId = {1}", availible ? 1 : 0, device.UniqueId);
-            availUpdate.ExecuteNonQuery();
+            using(SQLiteCommand availUpdate = new SQLiteCommand(db))
+            {
+                availUpdate.CommandText = string.Format("UPDATE DeviceInfo SET Availible = {0} WHERE UniqueId = {1}", availible ? 1 : 0, device.UniqueId);
+                availUpdate.ExecuteNonQuery();
+            }
 
             if (_sharedDb == null)
             {
                 db.Close();
+                GC.Collect();
             }
         }
 
@@ -116,51 +124,58 @@ namespace Automobile.Registrar
         public DeviceInfo GetFirstMatch(DeviceInfo device, bool filterByAvailible)
         {
             var db = _sharedDb ?? new SQLiteConnection(_dbName).OpenAndReturn();
+            DeviceInfo match;
+            using(SQLiteCommand deviceInfo = new SQLiteCommand(db))
+            {
+                deviceInfo.CommandText ="SELECT MobileOs, DeviceModel, OsVersion, UniqueId, IP FROM DeviceInfo WHERE";
+                bool first = true;
 
-            SQLiteCommand deviceInfo = new SQLiteCommand(db);
-            deviceInfo.CommandText ="SELECT MobileOs, DeviceModel, OsVersion, UniqueId, IP FROM DeviceInfo WHERE";
-            bool first = true;
+                if(device.MobileOs != null)
+                {
+                    deviceInfo.CommandText += string.Format(" MobileOs = '{0}'", device.MobileOs);
+                    first = false;
+                }
+                if(device.DeviceModel != null)
+                {
+                    deviceInfo.CommandText += string.Format("{0} DeviceModel = '{1}'", first ? "" : " AND", device.DeviceModel);
+                    first = false;
+                }
+                if(device.OsVersion != null)
+                {
+                    deviceInfo.CommandText += string.Format("{0} OsVersion = '{1}'", first ? "" : " AND", device.OsVersion);
+                    first = false;
+                }
+                if (device.UniqueId != null)
+                {
+                    deviceInfo.CommandText += string.Format("{0} UniqueId = '{1}'", first ? "" : " AND", device.UniqueId);
+                    first = false;
+                }
+                if(filterByAvailible)
+                {
+                    deviceInfo.CommandText += string.Format("{0} Availible = 1", first ? "" : " AND");
+                }
+                deviceInfo.CommandText += " limit 1";
 
-            if(device.MobileOs != null)
-            {
-                deviceInfo.CommandText += string.Format(" MobileOs = '{0}'", device.MobileOs);
-                first = false;
+                using (var reader = deviceInfo.ExecuteReader())
+                {
+                    match = !reader.HasRows
+                                ? null
+                                : new DeviceInfo
+                                  {
+                                      DeviceModel = (string) reader["DeviceModel"],
+                                      MobileOs =
+                                          (MobileOs) Enum.Parse(typeof (MobileOs), (string) reader["MobileOs"]),
+                                      IP = (string) reader["IP"],
+                                      OsVersion = (string) reader["OsVersion"],
+                                      UniqueId = (string) reader["UniqueId"]
+                                  };
+                }
             }
-            if(device.DeviceModel != null)
-            {
-                deviceInfo.CommandText += string.Format("{0} DeviceModel = '{1}'", first ? "" : " AND", device.DeviceModel);
-                first = false;
-            }
-            if(device.OsVersion != null)
-            {
-                deviceInfo.CommandText += string.Format("{0} OsVersion = '{1}'", first ? "" : " AND", device.OsVersion);
-                first = false;
-            }
-            if (device.UniqueId != null)
-            {
-                deviceInfo.CommandText += string.Format("{0} UniqueId = '{1}'", first ? "" : " AND", device.UniqueId);
-                first = false;
-            }
-            if(filterByAvailible)
-            {
-                deviceInfo.CommandText += string.Format("{0} Availible = 1", first ? "" : " AND");
-            }
-            deviceInfo.CommandText += " limit 1";
-
-            var reader = deviceInfo.ExecuteReader();
-
-            var match = !reader.HasRows ? null : new DeviceInfo
-                        {
-                            DeviceModel = (string) reader["DeviceModel"],
-                            MobileOs = (MobileOs) Enum.Parse(typeof(MobileOs), (string)reader["MobileOs"]),
-                            IP = (string) reader["IP"],
-                            OsVersion = (string) reader["OsVersion"],
-                            UniqueId = (string) reader["UniqueId"]
-                        };
 
             if (_sharedDb == null)
             {
                 db.Close();
+                GC.Collect();
             }
 
             return match;

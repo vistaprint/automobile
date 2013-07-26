@@ -34,6 +34,8 @@ namespace Automobile.Registrar
                 "Registrar API", "registrar/{controller}/{id}",
                 new { id = RouteParameter.Optional });
 
+            config.Routes.MapHttpRoute("Registrar Status", "status", null, null, new StatusHandler());
+
             _server = new HttpSelfHostServer(config);         
             MobileDb.Instance = new SQLiteClient(dbFile);       
             _server.OpenAsync().Wait();

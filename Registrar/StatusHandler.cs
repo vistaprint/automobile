@@ -13,21 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Program.cs 
+StatusHandler.cs 
 */
 
-using System.Configuration;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Automobile.Registrar
 {
-    class Program
+    public class StatusHandler : HttpMessageHandler 
     {
-        static void Main(string[] args)
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var port = ConfigurationManager.AppSettings["port"] ?? "8080";
-            var server = new RegistrarServer("http://localhost:8080", "MobileDB.sqlite");
-            Thread.Sleep(Timeout.Infinite);
+            return Task<HttpResponseMessage>.Factory.StartNew(() => Handle(request), cancellationToken);
+        }
+        
+        private HttpResponseMessage Handle(HttpRequestMessage request)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            return response;
         }
     }
 }
