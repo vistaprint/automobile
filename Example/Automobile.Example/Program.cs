@@ -1,5 +1,6 @@
 ﻿using Automobile.Mobile.Framework;
 using Automobile.Mobile.Framework.Data;
+using Automobile.Mobile.Framework.Device;
 
 namespace Automobile.Example
 {
@@ -10,10 +11,12 @@ namespace Automobile.Example
             
             MobileDb.CreateRegistrarClient("http://localhost:8080", new JsonProvider());
 
-            var device = new DeviceInfo {UniqueId = "id"};
-            MobileDb.Instance.Register(device);
+            var match = MobileDb.Instance.GetFirstMatch(new DeviceInfo {MobileOs = MobileOs.Android});
 
-            MobileDb.Instance.SetAvailibility(device, false);
+            var device = new ProxyDevice(match.IP);
+            device.Connect();
+            device.Browser.Navigate("http://google.com/");
+            device.Disconnect();
         }
     }
 }
