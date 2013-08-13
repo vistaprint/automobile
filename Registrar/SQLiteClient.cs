@@ -98,7 +98,7 @@ namespace Automobile.Registrar
 
             using(SQLiteCommand availUpdate = new SQLiteCommand(db))
             {
-                availUpdate.CommandText = string.Format("UPDATE DeviceInfo SET Availible = {0} WHERE UniqueId = {1}", availible ? 1 : 0, device.UniqueId);
+                availUpdate.CommandText = string.Format("UPDATE DeviceInfo SET Availible = {0} WHERE UniqueId = '{1}'", availible ? 1 : 0, device.UniqueId);
                 availUpdate.ExecuteNonQuery();
             }
 
