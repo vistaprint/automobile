@@ -26,7 +26,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>dbregistration</string>
+			<string>registrar</string>
 			<key>Key</key>
 			<string>connType</string>
 			<key>Title</key>
@@ -35,6 +35,7 @@
 			<array>
 				<string>Direct Connection</string>
 				<string>DB Registration</string>
+				<string>Registrar</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>

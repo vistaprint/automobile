@@ -47,7 +47,7 @@ namespace Automobile.Mobile.iOS
 			// Load settings
 			var conn = NSUserDefaults.StandardUserDefaults.StringForKey("connType");
 			var connType = conn == null ? ConnectionType.Registrar : (ConnectionType) Enum.Parse(typeof(ConnectionType), conn);
-			var connString = NSUserDefaults.StandardUserDefaults.StringForKey("connString") ?? "http://devdstiert.vistaprint.net:8080/";
+			var connString = NSUserDefaults.StandardUserDefaults.StringForKey("connString");
 
 			// Init config controller
 			var webController = new iOSWebViewController(connType, connString);

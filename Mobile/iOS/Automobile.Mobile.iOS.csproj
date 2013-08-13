@@ -73,11 +73,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
-    <Reference Include="Automobile.Mobile.Framework">
-      <HintPath>..\Framework\bin\Debug\Automobile.Mobile.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json.MonoTouch">
       <HintPath>..\..\Libs\Json.NET\iOS\Newtonsoft.Json.MonoTouch.dll</HintPath>
+    </Reference>
+    <Reference Include="Automobile.Mobile.Framework">
+      <HintPath>..\Framework\bin\Debug\Automobile.Mobile.Framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
