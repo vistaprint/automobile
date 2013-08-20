@@ -25,7 +25,7 @@ using Automobile.Mobile.Framework;
 
 namespace Automobile.Mobile.Android.Config
 {
-    [Activity(Label = "Automation Config")]
+    [Activity(Label = "Automation Config", MainLauncher = true, Icon = "@drawable/phone_icon")]
     public class ConfigActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)

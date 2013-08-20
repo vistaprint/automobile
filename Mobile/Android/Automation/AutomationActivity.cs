@@ -30,7 +30,7 @@ namespace Automobile.Mobile.Android.Automation
     /// <summary>
     /// Main class for an android application
     /// </summary>
-    [Activity(Label = "Automation", MainLauncher = true, Icon = "@drawable/phone_icon", Theme = "@android:style/Theme.NoTitleBar", ConfigurationChanges = ConfigChanges.Orientation)]
+    [Activity(Label = "Automation", Theme = "@android:style/Theme.NoTitleBar", ConfigurationChanges = ConfigChanges.Orientation)]
     public class AutomationActivity : Activity
     {
         private AndroidDevice _device;
