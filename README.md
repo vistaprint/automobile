@@ -25,6 +25,6 @@ In addition to building your own .ipa, you can directly install from the App Sto
 
 #### Usage
 Before starting the app, you must go into your Settings app and configure a connection mode.
-
+ 
 
 
